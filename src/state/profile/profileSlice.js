@@ -5,7 +5,8 @@ const initialState = {
   phone: '',
   photo: '',
   status: '',
-  lastSeen: ''
+  lastSeen: '',
+  id: null
 }
 
 export const profileSlice = createSlice({
@@ -14,11 +15,19 @@ export const profileSlice = createSlice({
   reducers: {
     prueba: (state, action) => {
       state.name = action.payload.name
+    },
+    resetProfile: (state) => {
+      state.name = ''
+      state.phone = ''
+      state.photo = ''
+      state.status = ''
+      state.lastSeen = ''
+      state.id = null
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { prueba } = profileSlice.actions
+export const { prueba, resetProfile } = profileSlice.actions
 
 export default profileSlice.reducer

@@ -1,17 +1,27 @@
 import React from "react";
 import { AddIcon, Button, ButtonIcon, ButtonText, Center, HStack, Text } from "@gluestack-ui/themed";
+import { useNavigation } from "@react-navigation/native";
 
 const Login = () => {
+
+    const navigation = useNavigation();
 
     return (
         <Center>
             <HStack>
 
                 <Text color="red">
-                    hola
+                    LOGIN
                 </Text>
 
-                <Button size="md" variant="solid" action="primary" isDisabled={false} isFocusVisible={false} >
+                <Button
+                    onPress={() => navigation.navigate('signup')}
+                    size="md"
+                    variant="solid"
+                    action="primary"
+                    isDisabled={false}
+                    isFocusVisible={false}
+                >
                     <ButtonText>Add </ButtonText>
                     <ButtonIcon as={AddIcon} />
                 </Button>
