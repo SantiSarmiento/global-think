@@ -12,7 +12,7 @@ import { Alert } from "react-native";
 
 const optionsPhotos = {
     title: 'Seleccione una imagen',
-    quality: 0.8,
+    quality: 0.4,
     maxWidth: 420,
     maxHeight: 560,
     includeBase64: true
@@ -48,20 +48,35 @@ const EditProfile = () => {
 
     const handleClose = () => setShowActionsheet(!showActionsheet)
 
-    const takePhoto = async () => {
-        const result = await launchCamera(optionsPhotos);
-        console.log(result);
+    const takePhoto = () => {
+        launchCamera(optionsPhotos, (response) => {
+            if (response.didCancel) return;
+            if (response.error) {
+                Alert.alert('Error', 'Ocurrió un error al seleccionar la imagen');
+            } else {
+                if (response.assets[0].uri) {
+                    let file = `data:${response.assets[0].type};base64,${response.assets[0].base64}`;
+                    dispatch(setProfile({ ...profile, photo: file }));
+                    dispatch(editUser({ ...profile, photo: file }));
+                    setProfileInfo({ ...profileInfo, photo: file });
+                }
+            }
+        });
 
     };
 
-    const selectPhoto = async () => {
+    const selectPhoto = () => {
         launchImageLibrary(optionsPhotos, (response) => {
             if (response.didCancel) return;
             if (response.error) {
                 Alert.alert('Error', 'Ocurrió un error al seleccionar la imagen');
             } else {
-                let file = `data:${response.assets[0].type};base64,${response.assets[0].base64}`;
-                console.log(file);
+                if (response.assets[0].uri) {
+                    let file = `data:${response.assets[0].type};base64,${response.assets[0].base64}`;
+                    dispatch(setProfile({ ...profile, photo: file }));
+                    dispatch(editUser({ ...profile, photo: file }));
+                    setProfileInfo({ ...profileInfo, photo: file });
+                }
             }
         });
     };
@@ -132,14 +147,14 @@ const EditProfile = () => {
                     mt={20}
                 >
                     {
-                        profile?.photo !== ''
+                        profileInfo?.photo !== ''
                             ?
                             <AvatarImage
-                                source={{ uri: profile?.photo }}
+                                source={{ uri: profileInfo?.photo }}
                                 alt="Profile Image"
                             />
                             :
-                            <AvatarFallbackText>{profile?.name + ' ' + profile?.lastname}</AvatarFallbackText>
+                            <AvatarFallbackText>{profileInfo?.name + ' ' + profileInfo?.lastname}</AvatarFallbackText>
                     }
                 </Avatar>
             </Pressable>
