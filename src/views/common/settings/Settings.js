@@ -1,33 +1,48 @@
 import React from "react";
-import { AddIcon, Button, ButtonIcon, ButtonText, Center, HStack, Text } from "@gluestack-ui/themed";
-import { useNavigation } from "@react-navigation/native";
+import { Button, ButtonText, Heading, VStack } from "@gluestack-ui/themed";
+import { useDispatch, useSelector } from "react-redux";
+import ProfileInfoCard from "./components/ProfileInfoCard";
+import { resetProfile } from "../../../state/profile/profileSlice";
 
 const Settings = () => {
 
-    const navigation = useNavigation();
+    const dispatch = useDispatch();
+
+    const profile = useSelector(state => state.profile);
+
+    const handleSignOut = () => {
+        dispatch(resetProfile());
+    }
 
     return (
-        <Center>
-            <HStack>
-
-                <Text color="red">
-                    Settings
-                </Text>
-
-                <Button
-                    onPress={() => navigation.navigate('signup')}
-                    size="md"
-                    variant="solid"
-                    action="primary"
-                    isDisabled={false}
-                    isFocusVisible={false}
+        <VStack
+            w={"90%"}
+            alignSelf="center"
+            justifyContent="space-between"
+            h={"100%"}
+        >
+            <VStack>
+                <Heading
+                    size="2xl"
+                    mt={10}
                 >
-                    <ButtonText>Add </ButtonText>
-                    <ButtonIcon as={AddIcon} />
-                </Button>
-            </HStack>
+                    Configuración
+                </Heading>
+                <ProfileInfoCard profile={profile} />
+            </VStack>
 
-        </Center>
+            <Button
+                variant="link"
+                onPress={handleSignOut}
+            >
+                <ButtonText
+                    color="black"
+                >
+                    Cerrar sesión
+                </ButtonText>
+            </Button>
+
+        </VStack>
     )
 }
 

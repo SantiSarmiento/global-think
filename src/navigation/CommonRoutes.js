@@ -4,8 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../views/common/home/Home";
 import Settings from "../views/common/settings/Settings";
 import Chat from "../views/common/chat/Chat";
-import { SettingsIcon } from "@gluestack-ui/themed";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import EditProfile from "../views/common/settings/views/EditProfile";
 
 
 const Tab = createBottomTabNavigator();
@@ -54,13 +54,17 @@ function TabNavigator() {
 const CommonRoutes = () => {
 
     return (
-        <Stack.Navigator>
+        <Stack.Navigator
+            screenOptions={() => ({
+                headerShown: false,
+            })}
+        >
             <Stack.Screen
                 name="Home"
                 component={TabNavigator}
-                options={{ headerShown: false }}
             />
             <Stack.Screen name="chat" component={Chat} />
+            <Stack.Screen name="editprofile" component={EditProfile} />
         </Stack.Navigator>
     )
 };

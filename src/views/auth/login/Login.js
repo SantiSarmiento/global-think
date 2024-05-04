@@ -25,7 +25,7 @@ const Login = () => {
 
         // Simular una demora de 1 segundo antes de continuar
         setTimeout(() => {
-            const user = users.find(user => user.name === userInfo.name && user.password === userInfo.password);
+            const user = users.find(user => user.username === userInfo.name && user.password === userInfo.password);
             if (!user) {
                 setError(true);
             } else {
