@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AddIcon, Button, ButtonIcon, ButtonSpinner, ButtonText, Center, EyeIcon, EyeOffIcon, HStack, Heading, Input, InputField, InputIcon, Text, VStack } from "@gluestack-ui/themed";
+import { Button, ButtonSpinner, ButtonText, EyeIcon, EyeOffIcon, Heading, Input, InputField, InputIcon, Text, VStack } from "@gluestack-ui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "../../../state/profile/profileSlice";

@@ -15,6 +15,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-pruebaTecnicaGlobalThink-pruebaTecnicaGlobalThinkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-pruebaTecnicaGlobalThink-pruebaTecnicaGlobalThinkTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		D3870E592BE6C713006ADE8C /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = D3870E582BE6C713006ADE8C /* Fonts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,9 +44,10 @@
 		5709B34CF0A7D63546082F79 /* Pods-pruebaTecnicaGlobalThink.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pruebaTecnicaGlobalThink.release.xcconfig"; path = "Target Support Files/Pods-pruebaTecnicaGlobalThink/Pods-pruebaTecnicaGlobalThink.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-pruebaTecnicaGlobalThink-pruebaTecnicaGlobalThinkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pruebaTecnicaGlobalThink-pruebaTecnicaGlobalThinkTests.debug.xcconfig"; path = "Target Support Files/Pods-pruebaTecnicaGlobalThink-pruebaTecnicaGlobalThinkTests/Pods-pruebaTecnicaGlobalThink-pruebaTecnicaGlobalThinkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-pruebaTecnicaGlobalThink.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-pruebaTecnicaGlobalThink.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7C18A649AEED93218ACA669D /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = pruebaTecnicaGlobalThink/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		7C18A649AEED93218ACA669D /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = pruebaTecnicaGlobalThink/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = pruebaTecnicaGlobalThink/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-pruebaTecnicaGlobalThink-pruebaTecnicaGlobalThinkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pruebaTecnicaGlobalThink-pruebaTecnicaGlobalThinkTests.release.xcconfig"; path = "Target Support Files/Pods-pruebaTecnicaGlobalThink-pruebaTecnicaGlobalThinkTests/Pods-pruebaTecnicaGlobalThink-pruebaTecnicaGlobalThinkTests.release.xcconfig"; sourceTree = "<group>"; };
+		D3870E582BE6C713006ADE8C /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -89,6 +91,7 @@
 		13B07FAE1A68108700A75B9A /* pruebaTecnicaGlobalThink */ = {
 			isa = PBXGroup;
 			children = (
+				D3870E582BE6C713006ADE8C /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -249,6 +252,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				00BB8AFAEA5BCC89F3655507 /* PrivacyInfo.xcprivacy in Resources */,
+				D3870E592BE6C713006ADE8C /* Fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,10 +594,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -665,10 +666,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
