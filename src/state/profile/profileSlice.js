@@ -13,8 +13,13 @@ export const profileSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
-    prueba: (state, action) => {
+    setProfile: (state, action) => {
       state.name = action.payload.name
+      state.phone = action.payload.phone
+      state.photo = action.payload.photo
+      state.status = action.payload.status
+      state.lastSeen = action.payload.lastSeen
+      state.id = action.payload.id
     },
     resetProfile: (state) => {
       state.name = ''
@@ -28,6 +33,6 @@ export const profileSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { prueba, resetProfile } = profileSlice.actions
+export const { setProfile, resetProfile } = profileSlice.actions
 
 export default profileSlice.reducer

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    usuarios: [
+    users: [
         {
             name: 'Santiago',
             password: '123456',
@@ -19,12 +19,15 @@ export const usersSlice = createSlice({
     initialState,
     reducers: {
         prueba: (state, action) => {
-            state.usuarios = action.payload.usuarios
+            state.users = action.payload.users
+        },
+        resetUsers: (state) => {
+            state.users = initialState.users
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { prueba } = usersSlice.actions
+export const { prueba, resetUsers } = usersSlice.actions
 
 export default usersSlice.reducer

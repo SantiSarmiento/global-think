@@ -9,8 +9,13 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 function TabNavigator() {
+    
     return (
-        <Tab.Navigator>
+        <Tab.Navigator
+            screenOptions={{
+                headerShown: false
+            }}
+        >
             <Tab.Screen name="chatlist" component={Home} />
             <Tab.Screen name="settings" component={Settings} />
         </Tab.Navigator>
