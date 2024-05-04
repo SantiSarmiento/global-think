@@ -9,6 +9,7 @@ import { editUser } from "../../../../state/users/usersSlice";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Alert } from "react-native";
+import { View } from "@gluestack-ui/themed";
 
 const optionsPhotos = {
     title: 'Seleccione una imagen',
@@ -136,28 +137,32 @@ const EditProfile = () => {
                 }
             </HStack>
 
-            <Pressable
-                onPress={() => setShowActionsheet(!showActionsheet)}
+            <View
+                alignSelf="center"
             >
-                <Avatar
-                    bgColor='$amber600'
-                    size="xl"
-                    borderRadius="$full"
-                    alignSelf="center"
-                    mt={20}
+                <Pressable
+                    onPress={() => setShowActionsheet(!showActionsheet)}
                 >
-                    {
-                        profileInfo?.photo !== ''
-                            ?
-                            <AvatarImage
-                                source={{ uri: profileInfo?.photo }}
-                                alt="Profile Image"
-                            />
-                            :
-                            <AvatarFallbackText>{profileInfo?.name + ' ' + profileInfo?.lastname}</AvatarFallbackText>
-                    }
-                </Avatar>
-            </Pressable>
+                    <Avatar
+                        bgColor='$amber600'
+                        size="xl"
+                        borderRadius="$full"
+                        alignSelf="center"
+                        mt={20}
+                    >
+                        {
+                            profileInfo?.photo !== ''
+                                ?
+                                <AvatarImage
+                                    source={{ uri: profileInfo?.photo }}
+                                    alt="Profile Image"
+                                />
+                                :
+                                <AvatarFallbackText>{profileInfo?.name + ' ' + profileInfo?.lastname}</AvatarFallbackText>
+                        }
+                    </Avatar>
+                </Pressable>
+            </View>
 
             <VStack
                 mt={20}
