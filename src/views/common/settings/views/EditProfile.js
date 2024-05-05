@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { ActionsheetBackdrop, ActionsheetItemText, Avatar, AvatarImage, Button, ButtonText, HStack, Heading, Pressable, Text, VStack, Divider, ActionsheetItem, Input, InputField, AvatarFallbackText, Actionsheet, ActionsheetContent } from "@gluestack-ui/themed";
+import { Alert } from "react-native";
+import { ActionsheetBackdrop, View, ActionsheetItemText, Avatar, AvatarImage, Button, ButtonText, HStack, Heading, Pressable, Text, VStack, Divider, ActionsheetItem, Input, InputField, AvatarFallbackText, Actionsheet, ActionsheetContent } from "@gluestack-ui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -8,8 +9,6 @@ import { editUser } from "../../../../state/users/usersSlice";
 //icons
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { Alert } from "react-native";
-import { View } from "@gluestack-ui/themed";
 
 const optionsPhotos = {
     title: 'Seleccione una imagen',

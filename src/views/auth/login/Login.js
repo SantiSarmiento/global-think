@@ -32,7 +32,7 @@ const Login = () => {
                 dispatch(setProfile(user));
             }
             setLoading(false);
-        }, 500);
+        }, 1000);
     }
 
     return (
@@ -74,6 +74,7 @@ const Login = () => {
                     isInvalid={false}
                     isReadOnly={false}
                     alignItems="center"
+                    mt={10}
                 >
                     <InputField
                         placeholder="Contraseña"

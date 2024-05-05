@@ -1,19 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+//en el estado inicial agregamos un registro de ultimo id para simular un autoincremental
 const initialState = {
     users: [
         {
             username: 'santiago',
             name: 'santiago',
             lastname: 'sarmiento',
-            password: '123456',
+            password: '1234',
             phone: '3512845655',
             photo: '',
-            status: 'Available',
-            lastSeen: '5 minutes ago',
-            id: 22
+            status: 'Disponible',
+            lastSeen: 'Hace 5 minutos',
+            id: 1
         }
-    ]
+    ],
+    lastId: 1
 }
 
 export const usersSlice = createSlice({
@@ -37,6 +39,9 @@ export const usersSlice = createSlice({
                 return user
             })
         },
+        addUser: (state, action) => {
+            state.users.push(action.payload)
+        },
         resetUsers: (state) => {
             state.users = initialState.users
         }
@@ -44,6 +49,6 @@ export const usersSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { editUser, resetUsers } = usersSlice.actions
+export const { editUser, addUser, resetUsers } = usersSlice.actions
 
 export default usersSlice.reducer
