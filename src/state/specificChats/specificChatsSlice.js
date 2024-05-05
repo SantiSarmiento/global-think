@@ -6,16 +6,17 @@ const initialState = {
         {
             contact: "John",
             messages: [
+
                 {
-                    sender: "John",
-                    content: "Hola como estas?",
-                    time: "10:00 AM",
+                    sender: "You",
+                    content: "Hola, como estas?",
+                    time: "10:05 AM",
                     photo: ""
                 },
                 {
-                    sender: "You",
-                    content: "Bien, gracias, y tu?",
-                    time: "10:05 AM",
+                    sender: "John",
+                    content: "Bien, gracias",
+                    time: "11:00 AM",
                     photo: ""
                 }
             ]
@@ -26,13 +27,7 @@ const initialState = {
                 {
                     sender: "Maria",
                     content: "Hacemos la reunion a las 3?",
-                    time: "yesterday",
-                    photo: ""
-                },
-                {
-                    sender: "You",
-                    content: "Si, nos vemos a las 3",
-                    time: "yesterday",
+                    time: "ayer",
                     photo: ""
                 }
             ]
@@ -43,13 +38,13 @@ const initialState = {
                 {
                     sender: "You",
                     content: "Peter, llegas a tiempo?",
-                    time: "yesterday",
+                    time: "ayer",
                     photo: ""
                 },
                 {
                     sender: "Peter",
                     content: "Llego tarde a la reunion",
-                    time: "yesterday",
+                    time: "ayer",
                     photo: ""
                 }
             ]
@@ -60,7 +55,7 @@ const initialState = {
                 {
                     sender: "Ana",
                     content: "Vamos a cenar?",
-                    time: "yesterday",
+                    time: "ayer",
                     photo: ""
                 }
             ]
@@ -71,7 +66,7 @@ const initialState = {
                 {
                     sender: "Carlos",
                     content: "Nos vemos en la oficina",
-                    time: "yesterday",
+                    time: "ayer",
                     photo: ""
                 }
             ]
@@ -82,19 +77,25 @@ const initialState = {
                 {
                     sender: "Sara",
                     content: "Hoy no puedo ir al cine",
-                    time: "yesterday",
+                    time: "ayer",
                     photo: ""
                 },
                 {
                     sender: "You",
                     content: "Lo dejamos para otro dia?",
-                    time: "yesterday",
+                    time: "ayer",
                     photo: ""
                 },
                 {
                     sender: "Sara",
                     content: "Si, mejor otro dia",
-                    time: "yesterday",
+                    time: "ayer",
+                    photo: ""
+                },
+                {
+                    sender: "You",
+                    content: "Podriamos dejarlo para el Sabado?",
+                    time: "ayer",
                     photo: ""
                 },
             ]

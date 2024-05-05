@@ -43,16 +43,7 @@ const ChatItem = ({ item }) => {
                         size="md"
                         borderRadius="$full"
                     >
-                        {
-                            item?.photo
-                                ?
-                                <AvatarImage
-                                    source={{ uri: item?.photo }}
-                                    alt="Profile Image"
-                                />
-                                :
-                                <AvatarFallbackText>{item?.contact}</AvatarFallbackText>
-                        }
+                        <AvatarFallbackText>{item?.contact}</AvatarFallbackText>
                     </Avatar>
                     <VStack
                         ml={10}
@@ -62,12 +53,35 @@ const ChatItem = ({ item }) => {
                         >
                             {item?.contact}
                         </Heading>
-                        <Text
-                            size="sm"
-                            color="gray"
+                        <HStack
+                            alignItems="center"
+                            space="sm"
                         >
-                            {item?.lastMessage}
-                        </Text>
+                            {
+                                item.sender === "You"
+                                &&
+                                <Ionicons
+                                    name={"checkmark-done"}
+                                    size={15}
+                                    color={'black'}
+                                />
+                            }
+                            {
+                                item.photo
+                                &&
+                                <Ionicons
+                                    name={"camera-outline"}
+                                    size={15}
+                                    color={'black'}
+                                />
+                            }
+                            <Text
+                                size="sm"
+                                color="gray"
+                            >
+                                {item?.lastMessage ? item?.lastMessage : "Foto"}
+                            </Text>
+                        </HStack>
                     </VStack>
                 </HStack>
                 <VStack>
@@ -165,7 +179,14 @@ const ArchivedChats = () => {
                         Archivados
                     </Heading>
                 </HStack>
-
+                <Text 
+                textAlign="center"
+                mt={10}
+                maxWidth={'90%'}
+                alignSelf="center"
+                >
+                    Aqui encontraras todos tus chats archivados, puedes desarchivarlos si lo deseas.
+                </Text>
                 <FlatList
                     mt={20}
                     data={chats?.filter((chat) => chat.archived)}

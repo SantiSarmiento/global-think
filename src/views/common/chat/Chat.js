@@ -9,6 +9,7 @@ import CustomInputs from "../../../components/CustomInputs";
 import ImagePickerActions from "../../../utils/ImagePickerActions";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import { Image } from "@gluestack-ui/themed";
+import { updateChat } from "../../../state/chats/chatsSlice";
 
 const optionsPhotos = {
     title: 'Seleccione una imagen',
@@ -131,31 +132,33 @@ const Chat = ({ route }) => {
     };
 
     const sendPhoto = (file) => {
-        let mensaje = {
+        let newMessage = {
             sender: "You",
             content: "",
             time: "Recien",
             photo: file
         }
-        dispatch(addMessage({ contact: contact, message: mensaje }));
+        dispatch(addMessage({ contact: contact, message: newMessage }));
+        dispatch(updateChat({ contact: contact, message: { ...newMessage, photo: true } }))
     };
 
     const sendMessage = () => {
         if (!message) return;
-        let mensaje = {
+        let newMessage = {
             sender: "You",
             content: message,
             time: "Recien",
             photo: ""
         }
-        dispatch(addMessage({ contact: contact, message: mensaje }));
+        dispatch(addMessage({ contact: contact, message: newMessage }));
+        dispatch(updateChat({ contact: contact, message: newMessage }))
         setMessage("");
     };
 
     useEffect(() => {
         setChatInfo(chats.find(chat => chat.contact === contact)?.messages);
         setUserInfo(users.find(user => user.id === chatId));
-    
+
         // Desplazar automáticamente el FlatList al final cuando se carga por primera vez
         if (scrollRef.current) {
             scrollRef.current.scrollToEnd({ animated: true });
@@ -165,7 +168,7 @@ const Chat = ({ route }) => {
             }, 100);
         }
     }, [chats]);
-    
+
 
     return (
         <VStack

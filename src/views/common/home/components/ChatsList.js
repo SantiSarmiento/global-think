@@ -5,6 +5,7 @@ import { TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 //icons
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { pinChat, archiveChat } from "../../../../state/chats/chatsSlice";
 import { useNavigation } from "@react-navigation/native";
@@ -48,16 +49,7 @@ const ChatItem = ({ item, totalPinnedChats, navigation }) => {
                         size="md"
                         borderRadius="$full"
                     >
-                        {
-                            item?.photo
-                                ?
-                                <AvatarImage
-                                    source={{ uri: item?.photo }}
-                                    alt="Profile Image"
-                                />
-                                :
-                                <AvatarFallbackText>{item?.contact}</AvatarFallbackText>
-                        }
+                        <AvatarFallbackText>{item?.contact}</AvatarFallbackText>
                     </Avatar>
                     <VStack
                         ml={10}
@@ -67,12 +59,35 @@ const ChatItem = ({ item, totalPinnedChats, navigation }) => {
                         >
                             {item?.contact}
                         </Heading>
-                        <Text
-                            size="sm"
-                            color="gray"
+                        <HStack
+                            alignItems="center"
+                            space="sm"
                         >
-                            {item?.lastMessage}
-                        </Text>
+                            {
+                                item.sender === "You"
+                                &&
+                                <Ionicons
+                                    name={"checkmark-done"}
+                                    size={15}
+                                    color={'black'}
+                                />
+                            }
+                            {
+                                item.photo
+                                &&
+                                <Ionicons
+                                    name={"camera-outline"}
+                                    size={15}
+                                    color={'black'}
+                                />
+                            }
+                            <Text
+                                size="sm"
+                                color="gray"
+                            >
+                                {item?.lastMessage ? item?.lastMessage : "Foto"}
+                            </Text>
+                        </HStack>
                     </VStack>
                 </HStack>
                 <VStack>
