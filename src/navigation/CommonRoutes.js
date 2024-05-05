@@ -6,6 +6,7 @@ import Settings from "../views/common/settings/Settings";
 import Chat from "../views/common/chat/Chat";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import EditProfile from "../views/common/settings/views/EditProfile";
+import ArchivedChats from "../views/common/home/views/ArchivedChats";
 
 
 const Tab = createBottomTabNavigator();
@@ -65,6 +66,7 @@ const CommonRoutes = () => {
             />
             <Stack.Screen name="chat" component={Chat} />
             <Stack.Screen name="editprofile" component={EditProfile} />
+            <Stack.Screen name="archived" component={ArchivedChats} />
         </Stack.Navigator>
     )
 };

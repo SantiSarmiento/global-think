@@ -1,12 +1,31 @@
-import { AvatarImage, Divider, Heading } from "@gluestack-ui/themed";
-import { Avatar } from "@gluestack-ui/themed";
-import { AvatarFallbackText } from "@gluestack-ui/themed";
-import { FlatList, HStack, Text, VStack } from "@gluestack-ui/themed";
 import React, { useEffect, useState } from "react";
+import { Actionsheet, Avatar, ActionsheetItem, AvatarFallbackText, ActionsheetContent, ActionsheetItemText, ActionsheetDragIndicator, AvatarImage, Divider, Heading, ActionsheetDragIndicatorWrapper, ActionsheetBackdrop, Button, ButtonText, ButtonIcon } from "@gluestack-ui/themed";
+import { FlatList, HStack, Text, VStack } from "@gluestack-ui/themed";
 import { TouchableOpacity } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+//icons
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { pinChat, archiveChat } from "../../../../state/chats/chatsSlice";
+import { useNavigation } from "@react-navigation/native";
 
-const ChatItem = ({ item }) => {
+const ChatItem = ({ item, totalPinnedChats }) => {
+
+    const dispatch = useDispatch();
+
+    const [showActionsheet, setShowActionsheet] = useState(false);
+
+    const handleClose = () => setShowActionsheet(false);
+
+    const pinUpChat = () => {
+        setShowActionsheet(false);
+        dispatch(pinChat(item.id));
+    };
+
+    const archiveChats = () => {
+        setShowActionsheet(false);
+        dispatch(archiveChat(item.id));
+    }
 
     return (
         <TouchableOpacity
@@ -14,6 +33,8 @@ const ChatItem = ({ item }) => {
                 width: '90%',
                 alignSelf: 'center'
             }}
+            onLongPress={() => setShowActionsheet(true)}
+            onPress={() => console.log("Press on chat")}
         >
             <HStack
                 justifyContent="space-between"
@@ -56,44 +77,161 @@ const ChatItem = ({ item }) => {
                 </HStack>
                 <VStack>
                     <Text
-                        size="md"
+                        size="sm"
                         color="gray"
                     >
                         {item?.lastMessageTime}
                     </Text>
+
+                    {
+                        item?.pinup
+                            ?
+                            <AntDesign
+                                name={"pushpin"}
+                                size={15}
+                                color={'black'}
+                                style={{ transform: [{ rotateY: '180deg' }] }}
+                            />
+                            :
+                            <Text></Text>
+                    }
                 </VStack>
             </HStack>
+
+            <Actionsheet
+                isOpen={showActionsheet}
+                onClose={handleClose}
+                zIndex={999}
+            >
+                <ActionsheetBackdrop />
+                <ActionsheetContent
+                    zIndex={999}
+                    paddingBottom={30}
+                    backgroundColor="#f3f2f8"
+                >
+                    <ActionsheetDragIndicatorWrapper>
+                        <ActionsheetDragIndicator />
+                    </ActionsheetDragIndicatorWrapper>
+                    <VStack
+                        w={"90%"}
+                        bgColor="white"
+                        borderRadius={10}
+                        mt={10}
+                    >
+                        {
+                            (item.pinup || (totalPinnedChats < 2 && !item.pinup))
+                            &&
+                            <>
+                                <ActionsheetItem
+                                    onPress={pinUpChat}
+                                >
+                                    <HStack
+                                        width={"100%"}
+                                        alignItems="center"
+                                        justifyContent="space-between"
+                                    >
+                                        <ActionsheetItemText>
+                                            {item.pinup ? 'Desfijar' : 'Fijar chat'}
+                                        </ActionsheetItemText>
+                                        <MaterialCommunityIcons
+                                            name={item.pinup ? 'pin-off-outline' : 'pin-outline'}
+                                            size={25}
+                                            color={'black'}
+                                        />
+                                    </HStack>
+                                </ActionsheetItem>
+                                <Divider my="$0.5" />
+                            </>
+                        }
+                        <ActionsheetItem
+                            onPress={archiveChats}
+                        >
+                            <HStack
+                                width={"100%"}
+                                alignItems="center"
+                                justifyContent="space-between"
+                            >
+                                <ActionsheetItemText>
+                                    Archivar
+                                </ActionsheetItemText>
+                                <AntDesign
+                                    name={"inbox"}
+                                    size={25}
+                                    color={'black'}
+                                />
+                            </HStack>
+                        </ActionsheetItem>
+                    </VStack>
+
+                </ActionsheetContent>
+            </Actionsheet>
         </TouchableOpacity>
     )
 };
 
 const ChatsList = ({ searchCondition }) => {
 
+    const navigation = useNavigation();
+
     const chats = useSelector((state) => state.chats.chats);
 
     const [filteredChats, setFilteredChats] = useState([]);
+    const [archivedChats, setArchivedChats] = useState([]);
+    const totalPinnedChats = filteredChats.filter(chat => chat.pinup).length;
 
     useEffect(() => {
         // Filtrar los chats basados en el término de búsqueda
+        let archived = [...chats.filter(chat => chat.archived)];
+        let filtered = [...chats.filter(chat => !chat.archived)];
         if (searchCondition) {
-            const filtered = chats.filter(chat =>
+            filtered = chats.filter(chat =>
                 chat.contact.toLowerCase().includes(searchCondition.toLowerCase()) ||
                 chat.lastMessage.toLowerCase().includes(searchCondition.toLowerCase())
             );
-            setFilteredChats(filtered);
-        } else {
-            setFilteredChats(chats);
         }
+        // Ordenar los chats según la propiedad pinup
+        filtered.sort((a, b) => (a.pinup === b.pinup) ? 0 : a.pinup ? -1 : 1);
+        setFilteredChats(filtered);
+        setArchivedChats(archived);
     }, [searchCondition, chats]);
 
     return (
-        <FlatList
-            data={filteredChats}
-            mt={30}
-            keyExtractor={(item) => item.id.toString()}
-            ItemSeparatorComponent={() => <Divider my="$0.5" mt={10} mb={10} />}
-            renderItem={({ item, index }) => <ChatItem item={item} index={index} />}
-        />
+        <>
+            {
+                archivedChats.length > 0 &&
+                <TouchableOpacity
+                    onPress={() => navigation.navigate("archived")}
+                    style={{
+                        width: '90%',
+                        alignSelf: 'center',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        padding: 10,
+                        marginTop: 10
+                    }}
+                >
+                    <AntDesign
+                        name={"inbox"}
+                        size={25}
+                        color={'black'}
+                    />
+                    <Text
+                        size="md"
+                        color="black"
+                        ml={10}
+                    >
+                        Archivados
+                    </Text>
+                </TouchableOpacity >
+            }
+            <FlatList
+                mt={20}
+                data={filteredChats}
+                keyExtractor={(item) => item.id.toString()}
+                ItemSeparatorComponent={() => <Divider my="$0.5" mt={10} mb={10} />}
+                renderItem={({ item, index }) => <ChatItem item={item} totalPinnedChats={totalPinnedChats} index={index} />}
+            />
+        </>
     )
 };
 
