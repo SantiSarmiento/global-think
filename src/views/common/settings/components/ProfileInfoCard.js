@@ -20,7 +20,7 @@ const ProfileInfoCard = ({ profile }) => {
             onPress={() => navigation.navigate('editprofile')}
         >
             <Avatar
-                bgColor='$amber600'
+                bgColor='#ec6664'
                 size="md"
                 borderRadius="$full"
             >

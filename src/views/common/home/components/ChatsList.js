@@ -44,7 +44,7 @@ const ChatItem = ({ item, totalPinnedChats, navigation }) => {
                     alignItems="center"
                 >
                     <Avatar
-                        bgColor='$amber600'
+                        bgColor='#ec6664'
                         size="md"
                         borderRadius="$full"
                     >

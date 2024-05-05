@@ -25,7 +25,9 @@ const CustomInputs = ({
             isInvalid={isInvalid}
             isReadOnly={isReadOnly}
             alignItems="center"
-            borderRadius={10}
+            borderRadius={variant ? 0 : 10}
+            $focus-borderBlockColor="#ec6664"
+            $focus-borderColor="#ec6664"
         >
             {
                 search &&

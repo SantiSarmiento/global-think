@@ -23,7 +23,7 @@ const ChatItem = ({ content, sender, time, photo }) => {
     return (
         <HStack
             alignSelf={sender === "You" ? "flex-end" : "flex-start"}
-            bgColor={sender === "You" ? "white" : "#fea271"}
+            bgColor={sender === "You" ? "white" : "#ec6664"}
             borderRadius={10}
             p={10}
             m={10}
@@ -198,7 +198,7 @@ const Chat = ({ route }) => {
                         />
 
                         <Avatar
-                            bgColor='$amber600'
+                            bgColor='#ec6664'
                             size="md"
                             borderRadius="$full"
                             alignSelf="center"

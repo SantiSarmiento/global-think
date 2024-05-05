@@ -98,14 +98,17 @@ const EditProfile = () => {
 
     return (
         <VStack
-            w={"90%"}
+            w={"100%"}
             alignSelf="center"
             h={"100%"}
+            bgColor="#edeef5"
         >
             <HStack
                 alignItems="center"
                 justifyContent="space-between"
                 mt={10}
+                w={"90%"}
+                alignSelf="center"
             >
                 <HStack
                     alignItems="center"
@@ -145,7 +148,7 @@ const EditProfile = () => {
                     onPress={() => setShowActionsheet(!showActionsheet)}
                 >
                     <Avatar
-                        bgColor='$amber600'
+                        bgColor='#ec6664'
                         size="xl"
                         borderRadius="$full"
                         alignSelf="center"
@@ -168,10 +171,11 @@ const EditProfile = () => {
             <VStack
                 mt={20}
                 space="sm"
+                w={"90%"}
+                alignSelf="center"
             >
                 <Text>INFORMACIÓN PERSONAL</Text>
                 <CustomInputs
-                    variant="outline"
                     isDisabled={false}
                     isInvalid={false}
                     isReadOnly={false}
@@ -185,8 +189,6 @@ const EditProfile = () => {
                     }}
                 />
                 <CustomInputs
-                    variant="outline"
-
                     isDisabled={false}
                     isInvalid={false}
                     isReadOnly={false}
@@ -204,10 +206,11 @@ const EditProfile = () => {
             <VStack
                 mt={20}
                 space="sm"
+                w={"90%"}
+                alignSelf="center"
             >
                 <Text>NÚMERO DE TELÉFONO</Text>
                 <CustomInputs
-                    variant="outline"
                     isDisabled={true}
                     isInvalid={false}
                     isReadOnly={false}
@@ -218,10 +221,11 @@ const EditProfile = () => {
             <VStack
                 mt={20}
                 space="sm"
+                w={"90%"}
+                alignSelf="center"
             >
                 <Text>ESTADO</Text>
                 <CustomInputs
-                    variant="outline"
                     isDisabled={false}
                     isInvalid={false}
                     isReadOnly={false}
