@@ -41,14 +41,11 @@ export const usersSlice = createSlice({
         },
         addUser: (state, action) => {
             state.users.push(action.payload)
-        },
-        resetUsers: (state) => {
-            state.users = initialState.users
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { editUser, addUser, resetUsers } = usersSlice.actions
+export const { editUser, addUser } = usersSlice.actions
 
 export default usersSlice.reducer
