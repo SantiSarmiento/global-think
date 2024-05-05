@@ -85,7 +85,7 @@ const SignUp = () => {
                         onPress={() => !loading && navigation.goBack()}
                         name={"left"}
                         size={20}
-                        color={'#446589'}
+                        color={'#ec6664'}
                     />
 
                     <Heading
