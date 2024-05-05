@@ -49,11 +49,11 @@ const EndSignUp = ({ route }) => {
 
     const takePhoto = () => {
         launchCamera(optionsPhotos, (response) => {
-            if (response.didCancel) return;
+            if (response.didCancel || response.errorCode) return;
             if (response.error) {
                 Alert.alert('Error', 'Ocurrió un error al seleccionar la imagen');
             } else {
-                if (response.assets[0].uri) {
+                if (response?.assets[0]?.uri) {
                     let file = `data:${response.assets[0].type};base64,${response.assets[0].base64}`;
                     setUserInfo({ ...userInfo, photo: file });
                 }
@@ -64,11 +64,11 @@ const EndSignUp = ({ route }) => {
 
     const selectPhoto = () => {
         launchImageLibrary(optionsPhotos, (response) => {
-            if (response.didCancel) return;
+            if (response.didCancel || response.errorCode) return;
             if (response.error) {
                 Alert.alert('Error', 'Ocurrió un error al seleccionar la imagen');
             } else {
-                if (response.assets[0].uri) {
+                if (response?.assets[0]?.uri) {
                     let file = `data:${response.assets[0].type};base64,${response.assets[0].base64}`;
                     setUserInfo({ ...userInfo, photo: file });
                 }
