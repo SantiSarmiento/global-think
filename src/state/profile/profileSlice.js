@@ -12,7 +12,7 @@ const initialState = {
 }
 
 export const profileSlice = createSlice({
-  name: 'counter',
+  name: 'profile',
   initialState,
   reducers: {
     setProfile: (state, action) => {

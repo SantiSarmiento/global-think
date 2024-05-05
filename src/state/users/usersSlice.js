@@ -19,7 +19,7 @@ const initialState = {
 }
 
 export const usersSlice = createSlice({
-    name: 'counter',
+    name: 'users',
     initialState,
     reducers: {
         editUser: (state, action) => {
