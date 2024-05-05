@@ -13,7 +13,7 @@ const ProfileInfoCard = ({ profile }) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 padding: 10,
-                backgroundColor: '#edeef5',
+                backgroundColor: 'white',
                 borderRadius: 10,
                 marginTop: 20
             }}
