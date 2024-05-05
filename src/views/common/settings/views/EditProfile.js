@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { ActionsheetBackdrop, View, ActionsheetItemText, Avatar, AvatarImage, Button, ButtonText, HStack, Heading, Pressable, Text, VStack, Divider, ActionsheetItem, Input, InputField, AvatarFallbackText, Actionsheet, ActionsheetContent } from "@gluestack-ui/themed";
+import { View, Avatar, AvatarImage, Button, ButtonText, HStack, Heading, Pressable, Text, VStack, Input, InputField, AvatarFallbackText } from "@gluestack-ui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -8,7 +8,7 @@ import { setProfile } from "../../../../state/profile/profileSlice";
 import { editUser } from "../../../../state/users/usersSlice";
 //icons
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import ImagePickerActions from "../../../../utils/ImagePickerActions";
 
 const optionsPhotos = {
     title: 'Seleccione una imagen',
@@ -82,7 +82,9 @@ const EditProfile = () => {
     };
 
     const deletePhoto = () => {
-        console.log('eliminar foto');
+        dispatch(setProfile({ ...profile, photo: '' }));
+        dispatch(editUser({ ...profile, photo: '' }));
+        setProfileInfo({ ...profileInfo, photo: '' });
     };
 
     useEffect(() => {
@@ -263,108 +265,14 @@ const EditProfile = () => {
                 </Input>
             </VStack>
 
-            <Actionsheet
-                isOpen={showActionsheet}
-                onClose={handleClose}
-                zIndex={999}
-            >
-                <ActionsheetBackdrop />
-                <ActionsheetContent
-                    zIndex={999}
-                    paddingBottom={30}
-                    backgroundColor="#f3f2f8"
-                >
-                    <HStack
-                        alignItems="center"
-                        w={"90%"}
-                        justifyContent="space-between"
-                        p={5}
-                        mb={20}
-                    >
-                        <Heading>
-                            Editar la foto de perfil
-                        </Heading>
-                        <Ionicons
-                            onPress={handleClose}
-                            name={"close"}
-                            size={25}
-                            color={'black'}
-                        />
-                    </HStack>
-
-                    <VStack
-                        w={"90%"}
-                        bgColor="white"
-                        borderRadius={10}
-                    >
-                        <ActionsheetItem
-                            onPress={takePhoto}
-                        >
-                            <HStack
-                                width={"100%"}
-                                alignItems="center"
-                                justifyContent="space-between"
-                            >
-                                <ActionsheetItemText>
-                                    Tomar foto
-                                </ActionsheetItemText>
-                                <Ionicons
-                                    name={"camera-outline"}
-                                    size={25}
-                                    color={'black'}
-                                />
-                            </HStack>
-                        </ActionsheetItem>
-                        <Divider my="$0.5" />
-                        <ActionsheetItem
-                            onPress={selectPhoto}
-                        >
-                            <HStack
-                                width={"100%"}
-                                alignItems="center"
-                                justifyContent="space-between"
-                            >
-                                <ActionsheetItemText>
-                                    Seleccionar foto
-                                </ActionsheetItemText>
-                                <AntDesign
-                                    name={"picture"}
-                                    size={25}
-                                    color={'black'}
-                                />
-                            </HStack>
-                        </ActionsheetItem>
-                        {
-                            profile?.photo !== ''
-                            &&
-                            <>
-                                <Divider my="$0.5" />
-                                <ActionsheetItem
-                                    onPress={deletePhoto}
-                                >
-                                    <HStack
-                                        width={"100%"}
-                                        alignItems="center"
-                                        justifyContent="space-between"
-                                    >
-                                        <ActionsheetItemText
-                                            color="red"
-                                        >
-                                            Eliminar foto
-                                        </ActionsheetItemText>
-                                        <Ionicons
-                                            name={"trash-outline"}
-                                            size={25}
-                                            color={'red'}
-                                        />
-                                    </HStack>
-                                </ActionsheetItem>
-                            </>
-                        }
-                    </VStack>
-
-                </ActionsheetContent>
-            </Actionsheet>
+            <ImagePickerActions
+                showActionsheet={showActionsheet}
+                handleClose={handleClose}
+                takePhoto={takePhoto}
+                selectPhoto={selectPhoto}
+                deletePhoto={deletePhoto}
+                profile={profile}
+            />
         </VStack>
     )
 };
