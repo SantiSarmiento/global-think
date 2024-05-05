@@ -65,6 +65,8 @@ const Login = () => {
                         placeholder="Usuario"
                         onChangeText={(e) => setUserInfo({ ...userInfo, name: e })}
                         value={userInfo.name}
+                        autoCapitalize="none"
+                        autoCorrect={false}
                     />
                 </Input>
                 <Input

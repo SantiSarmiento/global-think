@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, ButtonText, Input, HStack, Heading, Text, VStack, InputField, ButtonSpinner } from "@gluestack-ui/themed";
+import { Button, ButtonText, Input, HStack, Heading, Text, VStack, InputField, ButtonSpinner, Toast, ToastDescription } from "@gluestack-ui/themed";
 //icons
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from "@react-navigation/native";
@@ -12,6 +12,8 @@ import { AvatarImage } from "@gluestack-ui/themed";
 import { AvatarFallbackText } from "@gluestack-ui/themed";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../../../state/users/usersSlice";
+import { useToast } from "@gluestack-ui/themed";
+import { ToastTitle } from "@gluestack-ui/themed";
 
 const optionsPhotos = {
     title: 'Seleccione una imagen',
@@ -24,6 +26,7 @@ const optionsPhotos = {
 const EndSignUp = ({ route }) => {
 
     const navigation = useNavigation();
+    const toast = useToast();
 
     const dispatch = useDispatch();
     const lastID = useSelector(state => state.users.lastId)
@@ -106,6 +109,20 @@ const EndSignUp = ({ route }) => {
                 setLoading(false);
                 return;
             } else {
+                toast.show({
+                    placement: "top",
+                    duration: 2000,
+                    render: ({ id }) => {
+                        const toastId = "toast-" + id
+                        return (
+                            <Toast nativeID={toastId} action="success" variant="solid">
+                                <VStack space="xs">
+                                    <ToastTitle>Usuario creado correctamente</ToastTitle>
+                                </VStack>
+                            </Toast>
+                        )
+                    },
+                })
                 dispatch(addUser({ ...userInfo, id: lastID + 1 }));
                 navigation.navigate("login");
             }
@@ -182,6 +199,8 @@ const EndSignUp = ({ route }) => {
                         placeholder="Nombre"
                         onChangeText={(e) => setUserInfo({ ...userInfo, name: e })}
                         value={userInfo.name}
+                        autoCapitalize="none"
+                        autoCorrect={false}
                     />
                 </Input>
 
@@ -195,6 +214,8 @@ const EndSignUp = ({ route }) => {
                         placeholder="Apellido"
                         onChangeText={(e) => setUserInfo({ ...userInfo, lastname: e })}
                         value={userInfo.lastname}
+                        autoCapitalize="none"
+                        autoCorrect={false}
                     />
                 </Input>
 

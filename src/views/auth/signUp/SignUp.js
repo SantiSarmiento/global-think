@@ -102,6 +102,8 @@ const SignUp = () => {
                         placeholder="Usuario"
                         onChangeText={(e) => setUserInfo({ ...userInfo, username: e })}
                         value={userInfo.username}
+                        autoCapitalize="none"
+                        autoCorrect={false}
                     />
                 </Input>
 
