@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { VStack, Button, Heading, ButtonText, Center, HStack, Text, InputField, Avatar, FlatList, AvatarFallbackText, AvatarImage, Input, View } from "@gluestack-ui/themed";
+import { VStack, Heading, HStack, Text, Avatar, FlatList, AvatarFallbackText, AvatarImage, View } from "@gluestack-ui/themed";
 import { useNavigation } from "@react-navigation/native";
-//icons
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useDispatch, useSelector } from "react-redux";
 import { addMessage } from "../../../state/specificChats/specificChatsSlice";
 import CustomInputs from "../../../components/CustomInputs";
-
 
 const ChatItem = ({ content, sender, time, photo }) => {
 

@@ -13,7 +13,7 @@ const ProfileInfoCard = ({ profile }) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 padding: 10,
-                backgroundColor: 'white',
+                backgroundColor: '#edeef5',
                 borderRadius: 10,
                 marginTop: 20
             }}
@@ -40,7 +40,7 @@ const ProfileInfoCard = ({ profile }) => {
             >
                 <Text
                     size="lg"
-                    color="black"
+                    color="#385371"
                 >
                     {profile?.name} {profile?.lastname}
                 </Text>

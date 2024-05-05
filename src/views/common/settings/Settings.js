@@ -16,12 +16,16 @@ const Settings = () => {
 
     return (
         <VStack
-            w={"90%"}
+            w={"100%"}
             alignSelf="center"
             justifyContent="space-between"
             h={"100%"}
+            bgColor="white"
         >
-            <VStack>
+            <VStack
+                w={'90%'}
+                alignSelf="center"
+            >
                 <Heading
                     size="2xl"
                     mt={10}

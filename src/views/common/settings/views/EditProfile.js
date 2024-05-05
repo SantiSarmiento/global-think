@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { View, Avatar, AvatarImage, Button, ButtonText, HStack, Heading, Pressable, Text, VStack, AvatarFallbackText } from "@gluestack-ui/themed";
+import { View, Avatar, AvatarImage, HStack, Heading, Pressable, Text, VStack, AvatarFallbackText } from "@gluestack-ui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -9,6 +9,7 @@ import { editUser } from "../../../../state/users/usersSlice";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ImagePickerActions from "../../../../utils/ImagePickerActions";
 import CustomInputs from "../../../../components/CustomInputs";
+import CustomButton from "../../../../components/CustomButtom";
 
 const optionsPhotos = {
     title: 'Seleccione una imagen',
@@ -126,15 +127,14 @@ const EditProfile = () => {
                 {
                     isModified
                     &&
-                    <Button
-                        variant="link"
+
+                    <CustomButton
+                        variant={'link'}
                         onPress={hanldeEditProfile}
-                    >
-                        <ButtonText
-                        >
-                            OK
-                        </ButtonText>
-                    </Button>
+                        text1={'OK'}
+                        colorText1={'#ec6664'}
+                    />
+
                 }
             </HStack>
 

@@ -31,7 +31,7 @@ function TabNavigator() {
                     title: "Chats",
                     tabBarIcon: ({ focused }) => {
                         return (
-                            <Ionicons name={focused ? "chatbubbles-sharp" : "chatbubbles-outline"} size={30} color={focused ? '#ec6664' : 'black'} />
+                            <Ionicons name={focused ? "chatbubbles-sharp" : "chatbubbles-outline"} size={30} color={focused ? '#446589' : 'black'} />
                         )
                     },
                 }}
@@ -43,7 +43,7 @@ function TabNavigator() {
                     title: "Configuración",
                     tabBarIcon: ({ focused }) => {
                         return (
-                            <Ionicons name={focused ? "settings-sharp" : "settings-outline"} size={30} color={focused ? '#ec6664' : 'black'} />
+                            <Ionicons name={focused ? "settings-sharp" : "settings-outline"} size={30} color={focused ? '#446589' : 'black'} />
                         )
                     },
                 }}
