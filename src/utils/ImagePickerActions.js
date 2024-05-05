@@ -10,7 +10,8 @@ const ImagePickerActions = ({
     takePhoto,
     selectPhoto,
     deletePhoto,
-    profile
+    profile,
+    text
 }) => {
     return (
         <Actionsheet
@@ -32,7 +33,7 @@ const ImagePickerActions = ({
                     mb={20}
                 >
                     <Heading>
-                        Editar la foto de perfil
+                        {text ? text : 'Editar la foto de perfil'}
                     </Heading>
                     <Ionicons
                         onPress={handleClose}
@@ -85,7 +86,7 @@ const ImagePickerActions = ({
                         </HStack>
                     </ActionsheetItem>
                     {
-                        profile?.photo !== ''
+                        profile && profile?.photo !== ''
                         &&
                         <>
                             <Divider my="$0.5" />

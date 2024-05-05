@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { VStack, Heading, HStack, Text, Avatar, FlatList, AvatarFallbackText, AvatarImage, View } from "@gluestack-ui/themed";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -6,6 +6,17 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useDispatch, useSelector } from "react-redux";
 import { addMessage } from "../../../state/specificChats/specificChatsSlice";
 import CustomInputs from "../../../components/CustomInputs";
+import ImagePickerActions from "../../../utils/ImagePickerActions";
+import { launchCamera, launchImageLibrary } from "react-native-image-picker";
+import { Image } from "@gluestack-ui/themed";
+
+const optionsPhotos = {
+    title: 'Seleccione una imagen',
+    quality: 0.4,
+    maxWidth: 420,
+    maxHeight: 560,
+    includeBase64: true
+};
 
 const ChatItem = ({ content, sender, time, photo }) => {
 
@@ -16,24 +27,52 @@ const ChatItem = ({ content, sender, time, photo }) => {
             borderRadius={10}
             p={10}
             m={10}
-            w={"56%"}
+            maxWidth={"70%"}
         >
-            <Text
-                color={sender === "You" ? "black" : "white"}
-                alignSelf="flex-start"
-                p={5}
-            >
-                {content}
-            </Text>
-            <Text
-                color={sender === "You" ? "gray" : "white"}
-                fontSize="$xs"
-                position="absolute"
-                bottom={5}
-                right={5}
-            >
-                {time}
-            </Text>
+            {
+                photo
+                    ?
+                    <VStack
+                        p={2}
+                        space="md"
+                    >
+                        <Image
+                            size="2xl"
+                            borderRadius="$none"
+                            alt="Profile Image"
+                            source={{
+                                uri: photo,
+                            }}
+                        />
+                        <Text
+                            color={sender === "You" ? "gray" : "white"}
+                            fontSize="$xs"
+                            alignSelf="flex-end"
+                        >
+                            {time}
+                        </Text>
+                    </VStack>
+                    :
+                    <VStack
+                        space="xs"
+                    >
+                        <Text
+                            color={sender === "You" ? "black" : "white"}
+                            alignSelf="flex-start"
+                            p={5}
+                        >
+                            {content}
+                        </Text>
+                        <Text
+                            color={sender === "You" ? "gray" : "white"}
+                            fontSize="$xs"
+                            alignSelf="flex-end"
+                        >
+                            {time}
+                        </Text>
+                    </VStack>
+
+            }
         </HStack>
     )
 };
@@ -44,10 +83,12 @@ const Chat = ({ route }) => {
     const dispatch = useDispatch();
 
     const { chatId, contact } = route.params;
+    const scrollRef = useRef(null);
 
     const chats = useSelector(state => state.chat.specificChats);
     const users = useSelector(state => state.chats.chats);
 
+    const [showActionsheet, setShowActionsheet] = useState(false)
     const [chatInfo, setChatInfo] = useState([]);
     const [userInfo, setUserInfo] = useState({
         name: "",
@@ -56,6 +97,48 @@ const Chat = ({ route }) => {
         photo: ""
     });
     const [message, setMessage] = useState("");
+
+    const handleClose = () => setShowActionsheet(!showActionsheet)
+
+    const takePhoto = () => {
+        launchCamera(optionsPhotos, (response) => {
+            if (response.didCancel || response.errorCode) return;
+            if (response.error) {
+                Alert.alert('Error', 'Ocurrió un error al seleccionar la imagen');
+            } else {
+                if (response?.assets[0]?.uri) {
+                    let file = `data:${response.assets[0].type};base64,${response.assets[0].base64}`;
+                    sendPhoto(file);
+                }
+            }
+        });
+        setShowActionsheet(!showActionsheet);
+    };
+
+    const selectPhoto = () => {
+        launchImageLibrary(optionsPhotos, (response) => {
+            if (response.didCancel || response.errorCode) return;
+            if (response.error) {
+                Alert.alert('Error', 'Ocurrió un error al seleccionar la imagen');
+            } else {
+                if (response?.assets[0]?.uri) {
+                    let file = `data:${response.assets[0].type};base64,${response.assets[0].base64}`;
+                    sendPhoto(file);
+                }
+            }
+        });
+        setShowActionsheet(!showActionsheet);
+    };
+
+    const sendPhoto = (file) => {
+        let mensaje = {
+            sender: "You",
+            content: "",
+            time: "Recien",
+            photo: file
+        }
+        dispatch(addMessage({ contact: contact, message: mensaje }));
+    };
 
     const sendMessage = () => {
         if (!message) return;
@@ -72,18 +155,28 @@ const Chat = ({ route }) => {
     useEffect(() => {
         setChatInfo(chats.find(chat => chat.contact === contact)?.messages);
         setUserInfo(users.find(user => user.id === chatId));
+    
+        // Desplazar automáticamente el FlatList al final cuando se carga por primera vez
+        if (scrollRef.current) {
+            scrollRef.current.scrollToEnd({ animated: true });
+            // Forzar una actualización de la interfaz de usuario
+            setTimeout(() => {
+                scrollRef.current.scrollToEnd({ animated: true });
+            }, 100);
+        }
     }, [chats]);
+    
 
     return (
         <VStack
             w={"100%"}
-            h={"100%"}
             bgColor="#eaedf8"
             justifyContent="space-between"
         >
             <VStack
                 w={"100%"}
                 alignSelf="center"
+                height="90%"
             >
                 <HStack
                     bgColor="white"
@@ -138,6 +231,7 @@ const Chat = ({ route }) => {
                 </HStack>
 
                 <FlatList
+                    ref={scrollRef}
                     mt={20}
                     data={chatInfo}
                     keyExtractor={(item, i) => i.toString()}
@@ -152,9 +246,10 @@ const Chat = ({ route }) => {
                 padding={10}
                 alignItems="center"
                 space="md"
+                height="10%"
             >
                 <AntDesign
-                    onPress={() => { }}
+                    onPress={() => setShowActionsheet(!showActionsheet)}
                     name={"plus"}
                     size={25}
                     color={'#446589'}
@@ -173,6 +268,14 @@ const Chat = ({ route }) => {
                     color={'#446589'}
                 />
             </HStack>
+
+            <ImagePickerActions
+                showActionsheet={showActionsheet}
+                handleClose={handleClose}
+                takePhoto={takePhoto}
+                selectPhoto={selectPhoto}
+                text={"Adjunta o toma una foto"}
+            />
         </VStack>
     )
 }
