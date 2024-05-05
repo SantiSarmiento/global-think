@@ -9,7 +9,9 @@ const initialState = {
             lastMessage: "Hola como estas?",
             lastMessageTime: "10:00 AM",
             pinup: false,
-            archived: false
+            archived: false,
+            lastSeen: "10:05 AM",
+            photo: "",
         },
         {
             id: 2,
@@ -17,7 +19,9 @@ const initialState = {
             lastMessage: "Hacemos la reunion a las 3?",
             lastMessageTime: "ayer",
             pinup: false,
-            archived: false
+            archived: false,
+            lastSeen: "ayer",
+            photo: ""
         },
         {
             id: 3,
@@ -25,7 +29,9 @@ const initialState = {
             lastMessage: "Llego tarde a la reunion",
             lastMessageTime: "Hace 2 horas",
             pinup: false,
-            archived: false
+            archived: false,
+            lastSeen: "ayer",
+            photo: ""
         },
         {
             id: 4,
@@ -33,7 +39,9 @@ const initialState = {
             lastMessage: "Vamos a cenar?",
             lastMessageTime: "Hace 5 minutos",
             pinup: false,
-            archived: false
+            archived: false,
+            lastSeen: "En línea",
+            photo: ""
         },
         {
             id: 5,
@@ -41,7 +49,9 @@ const initialState = {
             lastMessage: "Nos vemos en la oficina",
             lastMessageTime: "Hace 10 minutos",
             pinup: false,
-            archived: false
+            archived: false,
+            lastSeen: "Hace 1 hora",
+            photo: ""
         },
         {
             id: 6,
@@ -49,7 +59,9 @@ const initialState = {
             lastMessage: "Hoy no puedo ir al cine",
             lastMessageTime: "Hace 1 hora",
             pinup: false,
-            archived: false
+            archived: false,
+            lastSeen: "Hace 2 horas",
+            photo: ""
         }
     ],
     lastId: 6

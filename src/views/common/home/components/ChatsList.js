@@ -9,7 +9,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { pinChat, archiveChat } from "../../../../state/chats/chatsSlice";
 import { useNavigation } from "@react-navigation/native";
 
-const ChatItem = ({ item, totalPinnedChats }) => {
+const ChatItem = ({ item, totalPinnedChats, navigation }) => {
 
     const dispatch = useDispatch();
 
@@ -34,7 +34,7 @@ const ChatItem = ({ item, totalPinnedChats }) => {
                 alignSelf: 'center'
             }}
             onLongPress={() => setShowActionsheet(true)}
-            onPress={() => console.log("Press on chat")}
+            onPress={() => navigation.navigate("chat", { chatId: item.id, contact: item.contact })}
         >
             <HStack
                 justifyContent="space-between"
@@ -89,7 +89,7 @@ const ChatItem = ({ item, totalPinnedChats }) => {
                             <AntDesign
                                 name={"pushpin"}
                                 size={15}
-                                color={'black'}
+                                color={'#446589'}
                                 style={{ transform: [{ rotateY: '180deg' }] }}
                             />
                             :
@@ -228,8 +228,8 @@ const ChatsList = ({ searchCondition }) => {
                 mt={20}
                 data={filteredChats}
                 keyExtractor={(item) => item.id.toString()}
-                ItemSeparatorComponent={() => <Divider my="$0.5" mt={10} mb={10} />}
-                renderItem={({ item, index }) => <ChatItem item={item} totalPinnedChats={totalPinnedChats} index={index} />}
+                ItemSeparatorComponent={() => <Divider my="$0.5" mt={10} mb={10} width={'90%'} alignSelf="center" />}
+                renderItem={({ item, index }) => <ChatItem item={item} totalPinnedChats={totalPinnedChats} navigation={navigation} index={index} />}
             />
         </>
     )

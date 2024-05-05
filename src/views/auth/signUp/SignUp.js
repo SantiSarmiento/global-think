@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { AddIcon, Button, ButtonIcon, ButtonText, Input, EyeIcon, HStack, Heading, Text, VStack, InputField, EyeOffIcon, InputIcon, ButtonSpinner } from "@gluestack-ui/themed";
+import { HStack, Heading, Text, VStack } from "@gluestack-ui/themed";
 import { useNavigation } from "@react-navigation/native";
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import CustomInputs from "../../../components/CustomInputs";
+import CustomButton from "../../../components/CustomButtom";
 
 const SignUp = () => {
 
@@ -71,6 +73,7 @@ const SignUp = () => {
         >
             <VStack
                 w={"90%"}
+                space="md"
             >
                 <HStack
                     alignItems="center"
@@ -78,11 +81,11 @@ const SignUp = () => {
                     width={'90%'}
                     mb={20}
                 >
-                    <Ionicons
+                    <AntDesign
                         onPress={() => !loading && navigation.goBack()}
-                        name={"arrow-back"}
-                        size={25}
-                        color={'black'}
+                        name={"left"}
+                        size={20}
+                        color={'#446589'}
                     />
 
                     <Heading
@@ -93,55 +96,43 @@ const SignUp = () => {
                     </Heading>
                 </HStack>
 
-                <Input
-                    variant="underlined"
-                    size="lg"
-                    isInvalid={false}
-                >
-                    <InputField
-                        placeholder="Usuario"
-                        onChangeText={(e) => setUserInfo({ ...userInfo, username: e })}
-                        value={userInfo.username}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                    />
-                </Input>
 
-                <Input
+                <CustomInputs
                     variant="underlined"
-                    size="lg"
+                    isDisabled={false}
                     isInvalid={false}
-                    alignItems="center"
-                    mt={10}
-                >
-                    <InputField
-                        placeholder="Contraseña"
-                        onChangeText={(e) => setUserInfo({ ...userInfo, password: e })}
-                        value={userInfo.password}
-                        type={showPassword ? "text" : "password"}
-                    />
-                    <InputIcon
-                        as={!showPassword ? EyeIcon : EyeOffIcon}
-                        onPress={() => setShowPassword(!showPassword)} />
-                </Input>
+                    isReadOnly={false}
+                    value={userInfo.username}
+                    onChange={(e) => setUserInfo({ ...userInfo, username: e })}
+                    placeholder="Usuario"
+                />
 
-                <Input
+                <CustomInputs
                     variant="underlined"
-                    size="lg"
+                    isDisabled={false}
                     isInvalid={false}
-                    alignItems="center"
-                    mt={10}
-                >
-                    <InputField
-                        placeholder="Ingrese nuevamente la contraseña"
-                        onChangeText={(e) => setUserInfo({ ...userInfo, confirmPassword: e })}
-                        value={userInfo.confirmPassword}
-                        type={showPassword ? "text" : "password"}
-                    />
-                    <InputIcon
-                        as={!showPassword ? EyeIcon : EyeOffIcon}
-                        onPress={() => setShowPassword(!showPassword)} />
-                </Input>
+                    isReadOnly={false}
+                    value={userInfo.password}
+                    onChange={(e) => setUserInfo({ ...userInfo, password: e })}
+                    placeholder="Contraseña"
+                    isPassword
+                    showPassword={showPassword}
+                    setShowPassword={() => setShowPassword(!showPassword)}
+                />
+
+                <CustomInputs
+                    variant="underlined"
+                    isDisabled={false}
+                    isInvalid={false}
+                    isReadOnly={false}
+                    value={userInfo.confirmPassword}
+                    onChange={(e) => setUserInfo({ ...userInfo, confirmPassword: e })}
+                    placeholder="Confirmar contraseña"
+                    isPassword
+                    showPassword={showPassword}
+                    setShowPassword={() => setShowPassword(!showPassword)}
+                />
+
                 {
                     error
                     &&
@@ -154,20 +145,17 @@ const SignUp = () => {
                     </Text>
                 }
             </VStack>
-            <Button
-                isDisabled={userInfo.name === "" || userInfo.password === "" || userInfo.confirmPassword === "" || loading}
-                isFocusVisible={false}
-                onPress={handleSignUp}
-                width={'90%'}
+            <VStack
+                w={"90%"}
             >
-                {
-                    loading
-                        ?
-                        <ButtonSpinner />
-                        :
-                        <ButtonText>Continuar </ButtonText>
-                }
-            </Button>
+                <CustomButton
+                    isDisabled={userInfo.username === "" || userInfo.password === "" || userInfo.confirmPassword === "" || loading}
+                    isFocusVisible={false}
+                    loading={loading}
+                    onPress={handleSignUp}
+                    text1={'Continuar'}
+                />
+            </VStack>
         </VStack>
     )
 }

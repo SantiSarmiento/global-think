@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { View, Avatar, AvatarImage, Button, ButtonText, HStack, Heading, Pressable, Text, VStack, Input, InputField, AvatarFallbackText } from "@gluestack-ui/themed";
+import { View, Avatar, AvatarImage, Button, ButtonText, HStack, Heading, Pressable, Text, VStack, AvatarFallbackText } from "@gluestack-ui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { setProfile } from "../../../../state/profile/profileSlice";
 import { editUser } from "../../../../state/users/usersSlice";
-//icons
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import ImagePickerActions from "../../../../utils/ImagePickerActions";
+import CustomInputs from "../../../../components/CustomInputs";
 
 const optionsPhotos = {
     title: 'Seleccione una imagen',
@@ -109,15 +109,15 @@ const EditProfile = () => {
                 <HStack
                     alignItems="center"
                 >
-                    <Ionicons
+                    <AntDesign
                         onPress={() => navigation.goBack()}
-                        name={"arrow-back"}
-                        size={25}
-                        color={'black'}
+                        name={"left"}
+                        size={20}
+                        color={'#446589'}
                     />
 
                     <Heading
-                        size="xl"
+                        size="lg"
                         ml={5}
                     >
                         Editar perfil
@@ -167,102 +167,73 @@ const EditProfile = () => {
 
             <VStack
                 mt={20}
+                space="sm"
             >
-                <Text
-                    m={5}
-                >
-                    INFORMACIÓN PERSONAL
-                </Text>
-                <Input
+                <Text>INFORMACIÓN PERSONAL</Text>
+                <CustomInputs
                     variant="outline"
-                    bg="white"
-                    size="lg"
                     isDisabled={false}
                     isInvalid={false}
                     isReadOnly={false}
-                >
-                    <InputField
-                        placeholder="Nombre"
-                        onChangeText={(e) => setProfileInfo({ ...profileInfo, name: e })}
-                        value={profileInfo.name}
-                        onBlur={() => {
-                            if (profileInfo.name === "") {
-                                setProfileInfo({ ...profileInfo, name: profile.name });
-                            }
-                        }}
-                    />
-                </Input>
-                <Input
+                    value={profileInfo.name}
+                    placeholder="Nombre"
+                    onChange={(e) => setProfileInfo({ ...profileInfo, name: e })}
+                    onBlur={() => {
+                        if (profileInfo.name === "") {
+                            setProfileInfo({ ...profileInfo, name: profile.name });
+                        }
+                    }}
+                />
+                <CustomInputs
                     variant="outline"
-                    bg="white"
-                    size="lg"
+
                     isDisabled={false}
                     isInvalid={false}
                     isReadOnly={false}
-                    mt={5}
-                >
-                    <InputField
-                        placeholder="Apellido"
-                        onChangeText={(e) => setProfileInfo({ ...profileInfo, lastname: e })}
-                        value={profileInfo.lastname}
-                        onBlur={() => {
-                            if (profileInfo.lastname === "") {
-                                setProfileInfo({ ...profileInfo, lastname: profile.lastname });
-                            }
-                        }}
-                    />
-                </Input>
+                    value={profileInfo.lastname}
+                    placeholder="Apellido"
+                    onChange={(e) => setProfileInfo({ ...profileInfo, lastname: e })}
+                    onBlur={() => {
+                        if (profileInfo.lastname === "") {
+                            setProfileInfo({ ...profileInfo, lastname: profile.lastname });
+                        }
+                    }}
+                />
             </VStack>
 
             <VStack
                 mt={20}
+                space="sm"
             >
-                <Text
-                    m={5}
-                >
-                    NÚMERO DE TELÉFONO
-                </Text>
-                <Input
+                <Text>NÚMERO DE TELÉFONO</Text>
+                <CustomInputs
                     variant="outline"
-                    bg="white"
-                    size="lg"
                     isDisabled={true}
-                >
-                    <InputField
-                        placeholder="Apellido"
-                        onChangeText={(e) => setProfileInfo({ ...profileInfo, phone: e })}
-                        value={profileInfo.phone}
-                    />
-                </Input>
+                    isInvalid={false}
+                    isReadOnly={false}
+                    value={profileInfo.phone}
+                />
             </VStack>
 
             <VStack
                 mt={20}
+                space="sm"
             >
-                <Text
-                    m={5}
-                >
-                    ESTADO
-                </Text>
-                <Input
+                <Text>ESTADO</Text>
+                <CustomInputs
                     variant="outline"
-                    bg="white"
-                    size="lg"
                     isDisabled={false}
                     isInvalid={false}
                     isReadOnly={false}
-                >
-                    <InputField
-                        placeholder="Estado"
-                        onChangeText={(e) => setProfileInfo({ ...profileInfo, status: e })}
-                        value={profileInfo.status}
-                        onBlur={() => {
-                            if (profileInfo.status === "") {
-                                setProfileInfo({ ...profileInfo, status: profile.status });
-                            }
-                        }}
-                    />
-                </Input>
+                    value={profileInfo.status}
+                    placeholder="Estado"
+                    onChange={(e) => setProfileInfo({ ...profileInfo, status: e })}
+                    onBlur={() => {
+                        if (profileInfo.status === "") {
+                            setProfileInfo({ ...profileInfo, status: profile.status });
+                        }
+                    }}
+                />
             </VStack>
 
             <ImagePickerActions

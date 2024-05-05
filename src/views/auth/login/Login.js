@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Button, ButtonSpinner, ButtonText, EyeIcon, EyeOffIcon, Heading, Input, InputField, InputIcon, Text, VStack } from "@gluestack-ui/themed";
+import { Heading, Text, VStack } from "@gluestack-ui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "../../../state/profile/profileSlice";
+import CustomInputs from "../../../components/CustomInputs";
+import CustomButton from "../../../components/CustomButtom";
 
 const Login = () => {
 
@@ -45,49 +47,35 @@ const Login = () => {
         >
             <VStack
                 w={"90%"}
+                space="md"
             >
                 <Heading
-                    mt={10}
-                    mb={20}
                     size="xl"
                     alignSelf="center"
                 >
                     Ingresá tu usuario y contraseña
                 </Heading>
-                <Input
+                <CustomInputs
                     variant="underlined"
-                    size="lg"
                     isDisabled={false}
                     isInvalid={false}
                     isReadOnly={false}
-                >
-                    <InputField
-                        placeholder="Usuario"
-                        onChangeText={(e) => setUserInfo({ ...userInfo, name: e })}
-                        value={userInfo.name}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                    />
-                </Input>
-                <Input
+                    value={userInfo.name}
+                    onChange={(e) => setUserInfo({ ...userInfo, name: e })}
+                    placeholder="Usuario"
+                />
+                <CustomInputs
                     variant="underlined"
-                    size="lg"
                     isDisabled={false}
                     isInvalid={false}
                     isReadOnly={false}
-                    alignItems="center"
-                    mt={10}
-                >
-                    <InputField
-                        placeholder="Contraseña"
-                        onChangeText={(e) => setUserInfo({ ...userInfo, password: e })}
-                        value={userInfo.password}
-                        type={showPassword ? "text" : "password"}
-                    />
-                    <InputIcon
-                        as={!showPassword ? EyeIcon : EyeOffIcon}
-                        onPress={() => setShowPassword(!showPassword)} />
-                </Input>
+                    value={userInfo.password}
+                    onChange={(e) => setUserInfo({ ...userInfo, password: e })}
+                    placeholder="Contraseña"
+                    isPassword
+                    showPassword={showPassword}
+                    setShowPassword={() => setShowPassword(!showPassword)}
+                />
                 {
                     error
                     &&
@@ -104,30 +92,22 @@ const Login = () => {
             <VStack
                 w={"90%"}
             >
-                <Button
+                <CustomButton
                     isDisabled={userInfo.name === "" || userInfo.password === "" || loading}
                     isFocusVisible={false}
+                    loading={loading}
                     onPress={handleLogin}
-                >
-                    {
-                        loading
-                            ?
-                            <ButtonSpinner />
-                            :
-                            <ButtonText>Iniciar sesión </ButtonText>
-                    }
-                </Button>
-                <Button
-                    variant="link"
+                    text1="Iniciar sesión"
+                />
+
+                <CustomButton
+                    variant={"link"}
                     onPress={() => navigation.navigate("signup")}
-                >
-                    <ButtonText
-                        color="black"
-                    >
-                        Es tu primer ingreso ?
-                    </ButtonText>
-                    <ButtonText> Registrate </ButtonText>
-                </Button>
+                    text1="Es tu primer ingreso ?"
+                    colorText1={'black'}
+                    text2=" Registrate"
+                    colorText2={'#ec6664'}
+                />
 
             </VStack>
         </VStack>

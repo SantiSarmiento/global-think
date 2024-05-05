@@ -1,33 +1,181 @@
-import React from "react";
-import { AddIcon, Button, ButtonIcon, ButtonText, Center, HStack, Text } from "@gluestack-ui/themed";
+import React, { useEffect, useState } from "react";
+import { VStack, Button, Heading, ButtonText, Center, HStack, Text, InputField, Avatar, FlatList, AvatarFallbackText, AvatarImage, Input, View } from "@gluestack-ui/themed";
 import { useNavigation } from "@react-navigation/native";
+//icons
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useDispatch, useSelector } from "react-redux";
+import { addMessage } from "../../../state/specificChats/specificChatsSlice";
+import CustomInputs from "../../../components/CustomInputs";
 
-const Chat = () => {
 
-    const navigation = useNavigation();
+const ChatItem = ({ content, sender, time, photo }) => {
 
     return (
-        <Center>
-            <HStack>
+        <HStack
+            alignSelf={sender === "You" ? "flex-end" : "flex-start"}
+            bgColor={sender === "You" ? "white" : "#fea271"}
+            borderRadius={10}
+            p={10}
+            m={10}
+            w={"56%"}
+        >
+            <Text
+                color={sender === "You" ? "black" : "white"}
+                alignSelf="flex-start"
+                p={5}
+            >
+                {content}
+            </Text>
+            <Text
+                color={sender === "You" ? "gray" : "white"}
+                fontSize="$xs"
+                position="absolute"
+                bottom={5}
+                right={5}
+            >
+                {time}
+            </Text>
+        </HStack>
+    )
+};
 
-                <Text color="red">
-                    Chat
-                </Text>
+const Chat = ({ route }) => {
 
-                <Button
-                    onPress={() => navigation.navigate('signup')}
-                    size="md"
-                    variant="solid"
-                    action="primary"
-                    isDisabled={false}
-                    isFocusVisible={false}
+    const navigation = useNavigation();
+    const dispatch = useDispatch();
+
+    const { chatId, contact } = route.params;
+
+    const chats = useSelector(state => state.chat.specificChats);
+    const users = useSelector(state => state.chats.chats);
+
+    const [chatInfo, setChatInfo] = useState([]);
+    const [userInfo, setUserInfo] = useState({
+        name: "",
+        lastname: "",
+        status: "",
+        photo: ""
+    });
+    const [message, setMessage] = useState("");
+
+    const sendMessage = () => {
+        if (!message) return;
+        let mensaje = {
+            sender: "You",
+            content: message,
+            time: "Recien",
+            photo: ""
+        }
+        dispatch(addMessage({ contact: contact, message: mensaje }));
+        setMessage("");
+    };
+
+    useEffect(() => {
+        setChatInfo(chats.find(chat => chat.contact === contact)?.messages);
+        setUserInfo(users.find(user => user.id === chatId));
+    }, [chats]);
+
+    return (
+        <VStack
+            w={"100%"}
+            h={"100%"}
+            bgColor="#eaedf8"
+            justifyContent="space-between"
+        >
+            <VStack
+                w={"100%"}
+                alignSelf="center"
+            >
+                <HStack
+                    bgColor="white"
+                    width={'100%'}
+                    justifyContent="center"
+                    p={10}
                 >
-                    <ButtonText>Add </ButtonText>
-                    <ButtonIcon as={AddIcon} />
-                </Button>
-            </HStack>
+                    <HStack
+                        alignItems="center"
+                        width={'90%'}
+                        alignSelf="center"
+                        space="xl"
+                    >
+                        <AntDesign
+                            onPress={() => navigation.goBack()}
+                            name={"left"}
+                            size={20}
+                            color={'#446589'}
+                        />
 
-        </Center>
+                        <Avatar
+                            bgColor='$amber600'
+                            size="md"
+                            borderRadius="$full"
+                            alignSelf="center"
+                        >
+                            {
+                                userInfo?.photo
+                                    ?
+                                    <AvatarImage
+                                        source={{ uri: userInfo?.photo }}
+                                        alt="Profile Image"
+                                    />
+                                    :
+                                    <AvatarFallbackText>{userInfo?.contact}</AvatarFallbackText>
+                            }
+                        </Avatar>
+                        <VStack>
+                            <Heading
+                                size="sm"
+                            >
+                                {userInfo?.contact}
+                            </Heading>
+                            <Text
+                                size="xs"
+                                color="gray"
+                            >
+                                {userInfo?.lastSeen}
+                            </Text>
+                        </VStack>
+                    </HStack>
+                </HStack>
+
+                <FlatList
+                    mt={20}
+                    data={chatInfo}
+                    keyExtractor={(item, i) => i.toString()}
+                    renderItem={({ item, index }) => <ChatItem content={item.content} sender={item.sender} time={item.time} photo={item.photo} />}
+                />
+
+            </VStack>
+
+            <HStack
+                w={"100%"}
+                alignSelf="center"
+                padding={10}
+                alignItems="center"
+                space="md"
+            >
+                <AntDesign
+                    onPress={() => { }}
+                    name={"plus"}
+                    size={25}
+                    color={'#446589'}
+                />
+                <View flex={1} >
+                    <CustomInputs
+                        value={message}
+                        onChange={(text) => setMessage(text)}
+                        placeholder=""
+                    />
+                </View>
+                <Ionicons
+                    onPress={sendMessage}
+                    name={"send"}
+                    size={25}
+                    color={'#446589'}
+                />
+            </HStack>
+        </VStack>
     )
 }
 

@@ -1,61 +1,44 @@
 import React, { useState } from "react";
-import { AddIcon, Button, ButtonIcon, ButtonText, Center, HStack, Heading, Input, InputField, InputIcon, SearchIcon, Text, VStack } from "@gluestack-ui/themed";
-import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
+import { Heading, SafeAreaView, VStack, View } from "@gluestack-ui/themed";
 import ChatsList from "./components/ChatsList";
+import CustomInputs from "../../../components/CustomInputs";
 
 const Home = () => {
-
-    const navigation = useNavigation();
 
     const [searchCondition, setSearchCondition] = useState("");
 
     return (
-        <VStack
-            w={"100%"}
-            h={"100%"}
-            bgColor="white"
-        >
+        <SafeAreaView bgColor="blue" style={{ flex: 2 }}>
             <VStack
-                w={"90%"}
-                alignSelf="center"
+                w={"100%"}
+                h={"100%"}
+                bgColor="white"
             >
-                <Heading
-                    size="2xl"
-                    mt={10}
+                <VStack
+                    w={"90%"}
+                    alignSelf="center"
                 >
-                    Chats
-                </Heading>
-                <HStack
-                    mt={10}
-                >
-                    <Input
-                        variant="outline"
-                        size="md"
-                        isDisabled={false}
-                        isInvalid={false}
-                        isReadOnly={false}
-                        bgColor="#eeeeef"
-                        w={"100%"}
-                        alignItems="center"
+                    <Heading
+                        size="2xl"
+                        mt={10}
                     >
-                        <InputIcon
-                            marginLeft={10}
-                        >
-                            <SearchIcon />
-                        </InputIcon>
-                        <InputField
-                            placeholder="Buscar"
-                            onChangeText={(e) => setSearchCondition(e)}
+                        Chats
+                    </Heading>
+                    <View
+                        mt={10}
+                        width={'100%'}
+                    >
+                        <CustomInputs
+                            search
                             value={searchCondition}
-                            autoCapitalize="none"
-                            autoCorrect={false}
+                            onChange={(text) => setSearchCondition(text)}
+                            placeholder="Search"
                         />
-                    </Input>
-                </HStack>
+                    </View>
+                </VStack>
+                <ChatsList searchCondition={searchCondition} />
             </VStack>
-            <ChatsList searchCondition={searchCondition} />
-        </VStack>
+        </SafeAreaView>
     )
 }
 

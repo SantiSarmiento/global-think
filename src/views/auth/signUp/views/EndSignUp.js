@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Button, ButtonText, Input, HStack, Heading, Text, VStack, InputField, ButtonSpinner, Toast, ToastDescription } from "@gluestack-ui/themed";
-//icons
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { HStack, Heading, Text, VStack, Toast } from "@gluestack-ui/themed";
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from "@react-navigation/native";
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import ImagePickerActions from "../../../../utils/ImagePickerActions";
@@ -14,6 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../../../state/users/usersSlice";
 import { useToast } from "@gluestack-ui/themed";
 import { ToastTitle } from "@gluestack-ui/themed";
+import CustomInputs from "../../../../components/CustomInputs";
+import CustomButton from "../../../../components/CustomButtom";
 
 const optionsPhotos = {
     title: 'Seleccione una imagen',
@@ -140,6 +141,7 @@ const EndSignUp = ({ route }) => {
         >
             <VStack
                 w={"90%"}
+                space="md"
             >
                 <HStack
                     alignItems="center"
@@ -147,11 +149,11 @@ const EndSignUp = ({ route }) => {
                     width={'90%'}
                     mb={20}
                 >
-                    <Ionicons
+                    <AntDesign
                         onPress={() => !loading && navigation.goBack()}
-                        name={"arrow-back"}
-                        size={25}
-                        color={'black'}
+                        name={"left"}
+                        size={20}
+                        color={'#446589'}
                     />
 
                     <Heading
@@ -170,7 +172,7 @@ const EndSignUp = ({ route }) => {
                         onPress={() => setShowActionsheet(!showActionsheet)}
                     >
                         <Avatar
-                            bgColor='$amber600'
+                            bgColor="#ec6664"
                             size="xl"
                             borderRadius="$full"
                             alignSelf="center"
@@ -190,48 +192,37 @@ const EndSignUp = ({ route }) => {
                     </Pressable>
                 </View>
 
-                <Input
-                    variant="underlined"
-                    size="lg"
-                    isInvalid={false}
-                >
-                    <InputField
-                        placeholder="Nombre"
-                        onChangeText={(e) => setUserInfo({ ...userInfo, name: e })}
-                        value={userInfo.name}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                    />
-                </Input>
 
-                <Input
+                <CustomInputs
                     variant="underlined"
-                    size="lg"
+                    isDisabled={false}
                     isInvalid={false}
-                    mt={10}
-                >
-                    <InputField
-                        placeholder="Apellido"
-                        onChangeText={(e) => setUserInfo({ ...userInfo, lastname: e })}
-                        value={userInfo.lastname}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                    />
-                </Input>
+                    isReadOnly={false}
+                    value={userInfo.name}
+                    onChange={(e) => setUserInfo({ ...userInfo, name: e })}
+                    placeholder="Nombre"
+                />
 
-                <Input
+                <CustomInputs
                     variant="underlined"
-                    size="lg"
+                    isDisabled={false}
                     isInvalid={false}
-                    mt={10}
-                >
-                    <InputField
-                        placeholder="Teléfono"
-                        onChangeText={(e) => setUserInfo({ ...userInfo, phone: e })}
-                        value={userInfo.phone}
-                        keyboardType="phone-pad"
-                    />
-                </Input>
+                    isReadOnly={false}
+                    value={userInfo.lastname}
+                    onChange={(e) => setUserInfo({ ...userInfo, lastname: e })}
+                    placeholder="Apellido"
+                />
+
+                <CustomInputs
+                    variant="underlined"
+                    isDisabled={false}
+                    isInvalid={false}
+                    isReadOnly={false}
+                    value={userInfo.phone}
+                    onChange={(e) => setUserInfo({ ...userInfo, phone: e })}
+                    placeholder="Teléfono"
+                    keyboardType="numeric"
+                />
 
                 {
                     error
@@ -245,20 +236,19 @@ const EndSignUp = ({ route }) => {
                     </Text>
                 }
             </VStack>
-            <Button
-                isDisabled={userInfo.name === "" || userInfo.lastname === "" || userInfo.phone === "" || loading}
-                isFocusVisible={false}
-                onPress={handleSignUp}
-                width={'90%'}
+            <View
+                w={"90%"}
             >
-                {
-                    loading
-                        ?
-                        <ButtonSpinner />
-                        :
-                        <ButtonText>Registrar</ButtonText>
-                }
-            </Button>
+                <CustomButton
+                    isDisabled={userInfo.name === "" || userInfo.lastname === "" || userInfo.phone === "" || loading}
+                    isFocusVisible={false}
+                    isLoading={loading}
+                    onPress={handleSignUp}
+                    text1={'Registrar'}
+                    loading={loading}
+                />
+            </View>
+
 
             <ImagePickerActions
                 showActionsheet={showActionsheet}
