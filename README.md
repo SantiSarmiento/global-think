@@ -1,39 +1,26 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
+# Global Think
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+Pasos a seguir para la instalación del proyecto:
 
-## Step 1: Start the Metro Server
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+## Installation
 
-```bash
-# using npm
-npm start
-```
-
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
+Pasos para instalar el proyecto:
 
 ```bash
-# using npm
-npm run android
+  git clone https://github.com/SantiSarmiento/global-think.git
+  npm install
+  cd ios && pod install
+
+
+  npm run ios
+  npm run android
 ```
+    
+Versiones utilizadas durante la creación del proyecto:
 
-### For iOS
+Node v21.5.0
 
-```bash
-# using npm
-npm run ios
-```
-
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+NPM 10.2.4
