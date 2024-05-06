@@ -15,6 +15,7 @@ import { useToast } from "@gluestack-ui/themed";
 import { ToastTitle } from "@gluestack-ui/themed";
 import CustomInputs from "../../../../components/CustomInputs";
 import CustomButton from "../../../../components/CustomButtom";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
 
 const optionsPhotos = {
     title: 'Seleccione una imagen',
@@ -132,133 +133,139 @@ const EndSignUp = ({ route }) => {
     };
 
     return (
-        <VStack
-            h={"100%"}
-            alignItems="center"
-            justifyContent="space-between"
-            bgColor="white"
-            p={10}
+        <TouchableWithoutFeedback
+            onPress={() => {
+                Keyboard.dismiss();
+            }}
         >
             <VStack
-                w={"90%"}
-                space="md"
+                h={"100%"}
+                alignItems="center"
+                justifyContent="space-between"
+                bgColor="white"
+                p={10}
             >
-                <HStack
-                    alignItems="center"
-                    mt={10}
-                    width={'90%'}
-                    mb={20}
+                <VStack
+                    w={"90%"}
+                    space="md"
                 >
-                    <AntDesign
-                        onPress={() => !loading && navigation.goBack()}
-                        name={"left"}
-                        size={20}
-                        color={'#ec6664'}
+                    <HStack
+                        alignItems="center"
+                        mt={10}
+                        width={'90%'}
+                        mb={20}
+                    >
+                        <AntDesign
+                            onPress={() => !loading && navigation.goBack()}
+                            name={"left"}
+                            size={20}
+                            color={'#ec6664'}
+                        />
+
+                        <Heading
+                            size="xl"
+                            ml={5}
+                        >
+                            Terminar registro
+                        </Heading>
+                    </HStack>
+
+
+                    <View
+                        alignSelf="center"
+                    >
+                        <Pressable
+                            onPress={() => setShowActionsheet(!showActionsheet)}
+                        >
+                            <Avatar
+                                bgColor="#ec6664"
+                                size="xl"
+                                borderRadius="$full"
+                                alignSelf="center"
+                                mt={20}
+                            >
+                                {
+                                    userInfo?.photo !== ''
+                                        ?
+                                        <AvatarImage
+                                            source={{ uri: userInfo?.photo }}
+                                            alt="Profile Image"
+                                        />
+                                        :
+                                        <AvatarFallbackText>{userInfo?.name + ' ' + userInfo?.lastname}</AvatarFallbackText>
+                                }
+                            </Avatar>
+                        </Pressable>
+                    </View>
+
+
+                    <CustomInputs
+                        variant="underlined"
+                        isDisabled={false}
+                        isInvalid={false}
+                        isReadOnly={false}
+                        value={userInfo.name}
+                        onChange={(e) => setUserInfo({ ...userInfo, name: e })}
+                        placeholder="Nombre"
                     />
 
-                    <Heading
-                        size="xl"
-                        ml={5}
-                    >
-                        Terminar registro
-                    </Heading>
-                </HStack>
+                    <CustomInputs
+                        variant="underlined"
+                        isDisabled={false}
+                        isInvalid={false}
+                        isReadOnly={false}
+                        value={userInfo.lastname}
+                        onChange={(e) => setUserInfo({ ...userInfo, lastname: e })}
+                        placeholder="Apellido"
+                    />
 
+                    <CustomInputs
+                        variant="underlined"
+                        isDisabled={false}
+                        isInvalid={false}
+                        isReadOnly={false}
+                        value={userInfo.phone}
+                        onChange={(e) => setUserInfo({ ...userInfo, phone: e })}
+                        placeholder="Teléfono"
+                        keyboardType="numeric"
+                    />
 
-                <View
-                    alignSelf="center"
-                >
-                    <Pressable
-                        onPress={() => setShowActionsheet(!showActionsheet)}
-                    >
-                        <Avatar
-                            bgColor="#ec6664"
-                            size="xl"
-                            borderRadius="$full"
+                    {
+                        error
+                        &&
+                        <Text
+                            color="red"
+                            mt={10}
                             alignSelf="center"
-                            mt={20}
                         >
-                            {
-                                userInfo?.photo !== ''
-                                    ?
-                                    <AvatarImage
-                                        source={{ uri: userInfo?.photo }}
-                                        alt="Profile Image"
-                                    />
-                                    :
-                                    <AvatarFallbackText>{userInfo?.name + ' ' + userInfo?.lastname}</AvatarFallbackText>
-                            }
-                        </Avatar>
-                    </Pressable>
+                            {error}
+                        </Text>
+                    }
+                </VStack>
+                <View
+                    w={"90%"}
+                >
+                    <CustomButton
+                        isDisabled={userInfo.name === "" || userInfo.lastname === "" || userInfo.phone === "" || loading}
+                        isFocusVisible={false}
+                        isLoading={loading}
+                        onPress={handleSignUp}
+                        text1={'Registrar'}
+                        loading={loading}
+                    />
                 </View>
 
 
-                <CustomInputs
-                    variant="underlined"
-                    isDisabled={false}
-                    isInvalid={false}
-                    isReadOnly={false}
-                    value={userInfo.name}
-                    onChange={(e) => setUserInfo({ ...userInfo, name: e })}
-                    placeholder="Nombre"
+                <ImagePickerActions
+                    showActionsheet={showActionsheet}
+                    handleClose={handleClose}
+                    takePhoto={takePhoto}
+                    selectPhoto={selectPhoto}
+                    deletePhoto={deletePhoto}
+                    profile={userInfo}
                 />
-
-                <CustomInputs
-                    variant="underlined"
-                    isDisabled={false}
-                    isInvalid={false}
-                    isReadOnly={false}
-                    value={userInfo.lastname}
-                    onChange={(e) => setUserInfo({ ...userInfo, lastname: e })}
-                    placeholder="Apellido"
-                />
-
-                <CustomInputs
-                    variant="underlined"
-                    isDisabled={false}
-                    isInvalid={false}
-                    isReadOnly={false}
-                    value={userInfo.phone}
-                    onChange={(e) => setUserInfo({ ...userInfo, phone: e })}
-                    placeholder="Teléfono"
-                    keyboardType="numeric"
-                />
-
-                {
-                    error
-                    &&
-                    <Text
-                        color="red"
-                        mt={10}
-                        alignSelf="center"
-                    >
-                        {error}
-                    </Text>
-                }
             </VStack>
-            <View
-                w={"90%"}
-            >
-                <CustomButton
-                    isDisabled={userInfo.name === "" || userInfo.lastname === "" || userInfo.phone === "" || loading}
-                    isFocusVisible={false}
-                    isLoading={loading}
-                    onPress={handleSignUp}
-                    text1={'Registrar'}
-                    loading={loading}
-                />
-            </View>
-
-
-            <ImagePickerActions
-                showActionsheet={showActionsheet}
-                handleClose={handleClose}
-                takePhoto={takePhoto}
-                selectPhoto={selectPhoto}
-                deletePhoto={deletePhoto}
-                profile={userInfo}
-            />
-        </VStack>
+        </TouchableWithoutFeedback>
     )
 };
 

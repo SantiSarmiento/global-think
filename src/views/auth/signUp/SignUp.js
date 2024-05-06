@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import CustomInputs from "../../../components/CustomInputs";
 import CustomButton from "../../../components/CustomButtom";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
 
 const SignUp = () => {
 
@@ -64,99 +65,105 @@ const SignUp = () => {
     }
 
     return (
-        <VStack
-            h={"100%"}
-            alignItems="center"
-            justifyContent="space-between"
-            bgColor="white"
-            p={10}
+        <TouchableWithoutFeedback
+            onPress={() => {
+                Keyboard.dismiss();
+            }}
         >
             <VStack
-                w={"90%"}
-                space="md"
+                h={"100%"}
+                alignItems="center"
+                justifyContent="space-between"
+                bgColor="white"
+                p={10}
             >
-                <HStack
-                    alignItems="center"
-                    mt={10}
-                    width={'90%'}
-                    mb={20}
+                <VStack
+                    w={"90%"}
+                    space="md"
                 >
-                    <AntDesign
-                        onPress={() => !loading && navigation.goBack()}
-                        name={"left"}
-                        size={20}
-                        color={'#ec6664'}
+                    <HStack
+                        alignItems="center"
+                        mt={10}
+                        width={'90%'}
+                        mb={20}
+                    >
+                        <AntDesign
+                            onPress={() => !loading && navigation.goBack()}
+                            name={"left"}
+                            size={20}
+                            color={'#ec6664'}
+                        />
+
+                        <Heading
+                            size="xl"
+                            ml={5}
+                        >
+                            Registro
+                        </Heading>
+                    </HStack>
+
+
+                    <CustomInputs
+                        variant="underlined"
+                        isDisabled={false}
+                        isInvalid={false}
+                        isReadOnly={false}
+                        value={userInfo.username}
+                        onChange={(e) => setUserInfo({ ...userInfo, username: e })}
+                        placeholder="Usuario"
                     />
 
-                    <Heading
-                        size="xl"
-                        ml={5}
-                    >
-                        Registro
-                    </Heading>
-                </HStack>
+                    <CustomInputs
+                        variant="underlined"
+                        isDisabled={false}
+                        isInvalid={false}
+                        isReadOnly={false}
+                        value={userInfo.password}
+                        onChange={(e) => setUserInfo({ ...userInfo, password: e })}
+                        placeholder="Contraseña"
+                        isPassword
+                        showPassword={showPassword}
+                        setShowPassword={() => setShowPassword(!showPassword)}
+                    />
 
+                    <CustomInputs
+                        variant="underlined"
+                        isDisabled={false}
+                        isInvalid={false}
+                        isReadOnly={false}
+                        value={userInfo.confirmPassword}
+                        onChange={(e) => setUserInfo({ ...userInfo, confirmPassword: e })}
+                        placeholder="Confirmar contraseña"
+                        isPassword
+                        showPassword={showPassword}
+                        setShowPassword={() => setShowPassword(!showPassword)}
+                    />
 
-                <CustomInputs
-                    variant="underlined"
-                    isDisabled={false}
-                    isInvalid={false}
-                    isReadOnly={false}
-                    value={userInfo.username}
-                    onChange={(e) => setUserInfo({ ...userInfo, username: e })}
-                    placeholder="Usuario"
-                />
-
-                <CustomInputs
-                    variant="underlined"
-                    isDisabled={false}
-                    isInvalid={false}
-                    isReadOnly={false}
-                    value={userInfo.password}
-                    onChange={(e) => setUserInfo({ ...userInfo, password: e })}
-                    placeholder="Contraseña"
-                    isPassword
-                    showPassword={showPassword}
-                    setShowPassword={() => setShowPassword(!showPassword)}
-                />
-
-                <CustomInputs
-                    variant="underlined"
-                    isDisabled={false}
-                    isInvalid={false}
-                    isReadOnly={false}
-                    value={userInfo.confirmPassword}
-                    onChange={(e) => setUserInfo({ ...userInfo, confirmPassword: e })}
-                    placeholder="Confirmar contraseña"
-                    isPassword
-                    showPassword={showPassword}
-                    setShowPassword={() => setShowPassword(!showPassword)}
-                />
-
-                {
-                    error
-                    &&
-                    <Text
-                        color="red"
-                        mt={10}
-                        alignSelf="center"
-                    >
-                        {error}
-                    </Text>
-                }
+                    {
+                        error
+                        &&
+                        <Text
+                            color="red"
+                            mt={10}
+                            alignSelf="center"
+                        >
+                            {error}
+                        </Text>
+                    }
+                </VStack>
+                <VStack
+                    w={"90%"}
+                >
+                    <CustomButton
+                        isDisabled={userInfo.username === "" || userInfo.password === "" || userInfo.confirmPassword === "" || loading}
+                        isFocusVisible={false}
+                        loading={loading}
+                        onPress={handleSignUp}
+                        text1={'Continuar'}
+                    />
+                </VStack>
             </VStack>
-            <VStack
-                w={"90%"}
-            >
-                <CustomButton
-                    isDisabled={userInfo.username === "" || userInfo.password === "" || userInfo.confirmPassword === "" || loading}
-                    isFocusVisible={false}
-                    loading={loading}
-                    onPress={handleSignUp}
-                    text1={'Continuar'}
-                />
-            </VStack>
-        </VStack>
+        </TouchableWithoutFeedback>
     )
 }
 

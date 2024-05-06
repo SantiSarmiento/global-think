@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "../../../state/profile/profileSlice";
 import CustomInputs from "../../../components/CustomInputs";
 import CustomButton from "../../../components/CustomButtom";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
 
 const Login = () => {
 
@@ -38,79 +39,85 @@ const Login = () => {
     }
 
     return (
-        <VStack
-            h={"100%"}
-            alignItems="center"
-            justifyContent="space-between"
-            bgColor="white"
-            p={10}
+        <TouchableWithoutFeedback
+            onPress={() => {
+                Keyboard.dismiss();
+            }}
         >
             <VStack
-                w={"90%"}
-                space="md"
+                h={"100%"}
+                alignItems="center"
+                justifyContent="space-between"
+                bgColor="white"
+                p={10}
             >
-                <Heading
-                    size="xl"
-                    alignSelf="center"
+                <VStack
+                    w={"90%"}
+                    space="md"
                 >
-                    Ingresá tu usuario y contraseña
-                </Heading>
-                <CustomInputs
-                    variant="underlined"
-                    isDisabled={false}
-                    isInvalid={false}
-                    isReadOnly={false}
-                    value={userInfo.name}
-                    onChange={(e) => setUserInfo({ ...userInfo, name: e })}
-                    placeholder="Usuario"
-                />
-                <CustomInputs
-                    variant="underlined"
-                    isDisabled={false}
-                    isInvalid={false}
-                    isReadOnly={false}
-                    value={userInfo.password}
-                    onChange={(e) => setUserInfo({ ...userInfo, password: e })}
-                    placeholder="Contraseña"
-                    isPassword
-                    showPassword={showPassword}
-                    setShowPassword={() => setShowPassword(!showPassword)}
-                />
-                {
-                    error
-                    &&
-                    <Text
-                        color="red"
-                        mt={10}
+                    <Heading
+                        size="xl"
                         alignSelf="center"
                     >
-                        Usuario y/o contraseña incorrectos
-                    </Text>
-                }
+                        Ingresá tu usuario y contraseña
+                    </Heading>
+                    <CustomInputs
+                        variant="underlined"
+                        isDisabled={false}
+                        isInvalid={false}
+                        isReadOnly={false}
+                        value={userInfo.name}
+                        onChange={(e) => setUserInfo({ ...userInfo, name: e })}
+                        placeholder="Usuario"
+                    />
+                    <CustomInputs
+                        variant="underlined"
+                        isDisabled={false}
+                        isInvalid={false}
+                        isReadOnly={false}
+                        value={userInfo.password}
+                        onChange={(e) => setUserInfo({ ...userInfo, password: e })}
+                        placeholder="Contraseña"
+                        isPassword
+                        showPassword={showPassword}
+                        setShowPassword={() => setShowPassword(!showPassword)}
+                    />
+                    {
+                        error
+                        &&
+                        <Text
+                            color="red"
+                            mt={10}
+                            alignSelf="center"
+                        >
+                            Usuario y/o contraseña incorrectos
+                        </Text>
+                    }
+                </VStack>
+
+                <VStack
+                    w={"90%"}
+                >
+                    <CustomButton
+                        isDisabled={userInfo.name === "" || userInfo.password === "" || loading}
+                        isFocusVisible={false}
+                        loading={loading}
+                        onPress={handleLogin}
+                        text1="Iniciar sesión"
+                    />
+
+                    <CustomButton
+                        variant={"link"}
+                        onPress={() => navigation.navigate("signup")}
+                        text1="Es tu primer ingreso ?"
+                        colorText1={'black'}
+                        text2=" Registrate"
+                        colorText2={'#ec6664'}
+                    />
+
+                </VStack>
             </VStack>
-
-            <VStack
-                w={"90%"}
-            >
-                <CustomButton
-                    isDisabled={userInfo.name === "" || userInfo.password === "" || loading}
-                    isFocusVisible={false}
-                    loading={loading}
-                    onPress={handleLogin}
-                    text1="Iniciar sesión"
-                />
-
-                <CustomButton
-                    variant={"link"}
-                    onPress={() => navigation.navigate("signup")}
-                    text1="Es tu primer ingreso ?"
-                    colorText1={'black'}
-                    text2=" Registrate"
-                    colorText2={'#ec6664'}
-                />
-
-            </VStack>
-        </VStack>
+        </TouchableWithoutFeedback>
     )
 }
 
